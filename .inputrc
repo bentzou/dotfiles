@@ -1,0 +1,8 @@
+# allow case-insensitive autocomplete
+set completion-ignore-case On
+
+# auto-complete using characters coming after the cursor
+set skip-completed-text on
+
+# don't show hidden files in autocomplete suggestions
+set match-hidden-files off
