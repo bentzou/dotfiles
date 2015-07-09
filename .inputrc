@@ -1,6 +1,10 @@
 # allow case-insensitive autocomplete
 set completion-ignore-case On
 
+# list all matches with one tab
+set show-all-if-ambiguous on
+set show-all-if-unmodified on
+
 # auto-complete using characters coming after the cursor
 set skip-completed-text on
 
