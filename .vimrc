@@ -4,7 +4,8 @@
 " General
 set ruler
 nmap ; :
-"inoremap jk <Esc>                " use jk to escape 
+
+" use jk to escape 
 inoremap jk <C-[>
 
 
@@ -66,8 +67,13 @@ set visualbell                   " no beep
 set expandtab                    " replace tabs with spaces
 set shiftwidth=3
 set smartindent                  " add indents on the next line after {
+
+" allow indented comments starting with #
+inoremap # X#
+
 set softtabstop=3                " number of spaces added or deleted when using tab
 set tabstop=3                    " number of visual spaces per tab
+
 
 " UI
 set cursorline                   " highlight current line
