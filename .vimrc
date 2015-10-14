@@ -8,6 +8,9 @@ nmap ; :
 " use jk to escape 
 inoremap jk <C-[>
 
+" set paste/nopaste
+set pastetoggle=<F10>
+
 
 " Backup and Swap Files
 set noswapfile                   " disable swap file
