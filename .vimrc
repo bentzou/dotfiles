@@ -67,6 +67,7 @@ set visualbell                   " no beep
 
 
 " Tabs
+filetype indent on               " allow indenting by filetype
 set expandtab                    " replace tabs with spaces
 set shiftwidth=3
 set smartindent                  " add indents on the next line after {
@@ -81,8 +82,8 @@ set tabstop=3                    " number of visual spaces per tab
 " UI
 set cursorline                   " highlight current line
 set lazyredraw                   " redraw only when necessary
-set nowrap                       " don't wrap lines
 set number                       " show line numbers
 set showcmd                      " show command in bottom bar
 set showmatch                    " highlight matching [{()}]
 set wildmenu                     " visual autocomplete for command menu, e.g. autocomplete filenames for :e ~/.vim<TAB>
+set wrap                         " wrap lines
