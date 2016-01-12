@@ -13,6 +13,7 @@ set pastetoggle=<F10>
 
 
 " Backup and Swap Files
+set nobackup                     " no backup~ files
 set noswapfile                   " disable swap file
 
 
@@ -34,6 +35,7 @@ endif
 
 
 " History
+set hidden                       " remember undo after quitting
 set history=1000
 
 
@@ -81,9 +83,12 @@ set tabstop=3                    " number of visual spaces per tab
 
 " UI
 set cursorline                   " highlight current line
-set lazyredraw                   " redraw only when necessary
+set lazyredraw                   " no redraws in macros
 set number                       " show line numbers
+set scrolloff=2                  " 2 lines above/below cursor when scrolling
 set showcmd                      " show command in bottom bar
 set showmatch                    " highlight matching [{()}]
+set showmode                     " show mode in status bar (insert/replace/...)
+" set title                        " show file in titlebar
 set wildmenu                     " visual autocomplete for command menu, e.g. autocomplete filenames for :e ~/.vim<TAB>
 set wrap                         " wrap lines
