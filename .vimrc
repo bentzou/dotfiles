@@ -37,6 +37,8 @@ endif
 " History
 set hidden                       " remember undo after quitting
 set history=1000
+set undofile
+set undodir=~/.vim/undodir
 
 
 " Movement
