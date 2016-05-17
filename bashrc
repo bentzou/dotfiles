@@ -3,7 +3,6 @@
 set -o nounset
 
 SOURCE_DIR="$(builtin cd "$(dirname "${BASH_SOURCE[0]}")" && builtin pwd)"
-
 source "$SOURCE_DIR"/functions
 source "$SOURCE_DIR"/setuphome
 source "$SOURCE_DIR"/ps1
