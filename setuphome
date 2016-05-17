@@ -1,0 +1,68 @@
+#!/bin/bash
+
+set -o nounset
+
+SOURCE_DIR="$(builtin cd "$(dirname "${BASH_SOURCE[0]}")" && builtin pwd)"
+source "$SOURCE_DIR"/functions
+
+
+function init_vim () {
+   echo "Setting up vim"
+
+   {
+      # set up directories
+      declare -a vim_dirs=("$HOME/.vim" "$HOME/.vim/undodir")
+      local vim_dir
+
+      for vim_dir in "${vim_dirs[@]}"; do
+         if [[ -d "$vim_dir" ]]; then
+            echo "existing dir: $vim_dir"
+         else
+            mkdir -pv "$vim_dir"
+         fi
+      done
+   
+      # set up vimrc
+      local vimrc_in_path="$SOURCE_DIR/vimrc"
+      local vimrc_out_path="$HOME/.vimrc"
+
+      if [[ -L "$vimrc_out_path" && "$vimrc_in_path" == "$(readlink "$vimrc_out_path")" ]]; then
+         echo "existing vimrc: $vimrc_out_path -> $vimrc_in_path"
+         return
+      fi
+   
+      if [ -f "$vimrc_out_path" ] || [[ -L "$vimrc_out_path" && "$vimrc_in_path" != "$(readlink "$vimrc_out_path")" ]]; then
+         echo "existing vimrc was backed up"
+         backup "$vimrc_out_path"
+      fi
+
+      ln -vs "$vimrc_in_path" "$vimrc_out_path"
+   } | indent
+}
+
+function init_readline () {
+   echo "Setting up readline"
+
+   {
+      # set up inputrc
+      local inputrc_in_path="$SOURCE_DIR/.inputrc"
+      local inputrc_out_path="$HOME/.inputrc"
+   
+      if [[ -L "$inputrc_out_path" && "$inputrc_in_path" == "$(readlink "$inputrc_out_path")" ]]; then
+         echo "existing vimrc: $inputrc_out_path -> $inputrc_in_path"
+         return
+      fi
+   
+      if [ -f "$inputrc_out_path" ] || [[ -L "$inputrc_out_path" && "$inputrc_in_path" != "$(readlink "$inputrc_out_path")" ]]; then
+         echo "existing inputrc was backed up"
+         backup "$inputrc_out_path"
+      fi
+
+      ln -vs "$inputrc_in_path" "$inputrc_out_path"
+   } | indent
+}
+
+function theresnoplacelikehome () {
+   init_readline 
+   init_vim
+}

@@ -1,0 +1,55 @@
+#!/bin/bash
+
+set -o nounset
+
+function backup () {
+   # backup <file|directory> [suffix]
+
+   (( $# == 1 || $# == 2 )) || return 1
+
+   local suffix=${2:-bak}
+   local in_path="$(builtin cd "$(dirname "$1")"; builtin pwd)/$(basename "$1")"
+   local out_path="$in_path.$suffix"
+   local index=2
+
+   while [[ -f "$out_path" || -d "$out_path" ]]; do
+      out_path="${out_path}${index}"
+      (( index++ ))
+   done
+
+   mv -iv "$in_path" "$out_path"
+}
+
+function change_terminal_title () {
+   # change_terminal_title <title>
+
+   (( $# == 1 )) && echo -ne "\033]0;$1\007" || return 1
+}
+
+function indent () {
+   # indent [num_tabs=1] [num_spaces_per_tab=3]
+   # do_something | indent
+
+   (( 0 <= $# && $# <= 2 )) || return 1
+
+   local tabs=${1:-1}
+   local num_spaces=${2:-3}
+   local spaces=$(printf "%0.s " $(seq 1 $((num_spaces * ${tabs#-}))))
+
+   (( tabs >= 0 )) && sed "s/^/${spaces}/" || sed "s/^${spaces}//"
+}
+
+function path () {
+   # path [file|directory]
+
+   (( $# == 0 )) && pwd && return
+   for filename in "${@:1}"; do
+      echo "$(builtin cd "$(dirname "$filename")"; pwd)/$(basename "$filename")"
+   done
+}
+
+function rmcolor () {
+   # do_something | rmcolor
+
+	sed $'s,\x1b\\[[0-9;]*[a-zA-Z],,g'
+}

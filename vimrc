@@ -40,6 +40,10 @@ set history=1000
 set undofile
 set undodir=~/.vim/undodir
 
+if has("autocmd")                " remember last position in file
+   au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+endif
+
 
 " Movement
 
