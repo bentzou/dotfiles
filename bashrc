@@ -46,6 +46,7 @@ source "$SOURCE_DIR"/ps1
    
    alias gb="git branch"
    alias gd="git diff"
+   alias gl="git log --graph --decorate --pretty=oneline --abbrev-commit"
    alias gs="git status"
    
    alias sbp="source $HOME/.bashrc_personal"
