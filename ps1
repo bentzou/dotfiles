@@ -13,8 +13,8 @@ ps1_branch () {
 
    # get git branch
    ! git branch &>/dev/null && return 1
-   br="$(git branch | egrep "^\*" | cut -d' ' -f2)"
-   br="$(basename $br)"
+   br="$(git branch | egrep "^\*" | cut -d' ' -f2-)"
+   br="$(basename "$br")"
    (( ${#br} > $max_len )) && br="${br:0:$max_len-2}.."
 
    # get color depending on branch
@@ -31,8 +31,8 @@ ps1_saymyname () {
 
 ps1_prefix () {
    # print branch if exists
-   local br=$(ps1_branch)
-   [ -n "$br" ] && ps1_branch || ps1_saymyname
+   local br="$(ps1_branch)"
+   [ -n "$br" ] && echo "$br" || ps1_saymyname
 }
 
 prompt_cmd () {
