@@ -55,7 +55,7 @@ source "$SOURCE_DIR"/ps1
 
 # FUNCTIONS
    f () { (( $# == 1 )) && find . -iname "*$(basename $1)*" | grep "$1"; }
-   g () { case $# in 1) grep -r "$1" .;; 2) grep -r "$1" "$2";; esac; }
+   g () { case $# in 1) grep -Ir "$1" .;; 2) grep -r "$1" "$2";; esac; }
    p () { path "$@"; }
    pg () { (( $# == 1 )) && echo "ps -ef | grep -i $1" && ps -ef | grep -i $1; }
    viewcsv () { column -s, -t "$@" | less -c -#20 -N -S; }
