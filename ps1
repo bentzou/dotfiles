@@ -4,7 +4,7 @@
 red_b='\033[1;31m'
 green_b='\033[1;32m'
 lightblue='\033[94m'
-default='\033[m'
+default='\033[0m'
 
 ps1_branch () {
    # print PS1-ready, truncated, colorized branch
@@ -36,7 +36,7 @@ ps1_prefix () {
 }
 
 prompt_cmd () {
-   PS1="$(ps1_prefix)\[\e${lightblue}\] \w> \[\e[m\]"
+   PS1="$(ps1_prefix)\[${lightblue}\] \w> \[\e[m\]"
 }
 
 PROMPT_COMMAND=prompt_cmd
