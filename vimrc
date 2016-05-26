@@ -59,7 +59,7 @@ nnoremap <silent> <C-h> gT
 
 
 " Mouse
-set mouse=a
+"set mouse=a
 
 
 " Searching
