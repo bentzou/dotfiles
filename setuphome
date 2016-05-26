@@ -2,13 +2,39 @@
 
 set -o nounset
 
-SOURCE_DIR="$(builtin cd "$(dirname "${BASH_SOURCE[0]}")" && builtin pwd)"
+SOURCE_DIR="$(builtin cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$SOURCE_DIR"/functions
 
+link_config () {
+   (( $# != 2 )) && return 1
 
-function init_vim () {
+   local config_name="$(basename $1)"
+   local in_path="$1"
+   local out_path="$2"
+
+   {
+      if [[ -L "$out_path" && "$in_path" == "$(readlink "$out_path")" ]]; then
+         echo "existing vimrc: $out_path -> $in_path"
+         return
+      fi
+   
+      if [ -f "$out_path" ] || [[ -L "$out_path" && "$in_path" != "$(readlink "$out_path")" ]]; then
+         echo -n "existing $config_name was backed up"
+         backup "$out_path"
+      fi
+
+      echo -n "new $config_name symlinked: "
+      ln -vs "$in_path" "$out_path"
+   } | indent
+}
+
+init_readline () {
+   echo "Setting up inputrc"
+   link_config "$SOURCE_DIR/inputrc" "$HOME/.inputrc"
+}
+
+init_vim () {
    echo "Setting up vim"
-
    {
       # set up directories
       declare -a vim_dirs=("$HOME/.vim" "$HOME/.vim/undodir")
@@ -21,48 +47,13 @@ function init_vim () {
             mkdir -pv "$vim_dir"
          fi
       done
-   
-      # set up vimrc
-      local vimrc_in_path="$SOURCE_DIR/vimrc"
-      local vimrc_out_path="$HOME/.vimrc"
-
-      if [[ -L "$vimrc_out_path" && "$vimrc_in_path" == "$(readlink "$vimrc_out_path")" ]]; then
-         echo "existing vimrc: $vimrc_out_path -> $vimrc_in_path"
-         return
-      fi
-   
-      if [ -f "$vimrc_out_path" ] || [[ -L "$vimrc_out_path" && "$vimrc_in_path" != "$(readlink "$vimrc_out_path")" ]]; then
-         echo "existing vimrc was backed up"
-         backup "$vimrc_out_path"
-      fi
-
-      ln -vs "$vimrc_in_path" "$vimrc_out_path"
    } | indent
+   
+   # set up vimrc
+   link_config "$SOURCE_DIR/vimrc" "$HOME/.vimrc"
 }
 
-function init_readline () {
-   echo "Setting up readline"
-
-   {
-      # set up inputrc
-      local inputrc_in_path="$SOURCE_DIR/.inputrc"
-      local inputrc_out_path="$HOME/.inputrc"
-   
-      if [[ -L "$inputrc_out_path" && "$inputrc_in_path" == "$(readlink "$inputrc_out_path")" ]]; then
-         echo "existing vimrc: $inputrc_out_path -> $inputrc_in_path"
-         return
-      fi
-   
-      if [ -f "$inputrc_out_path" ] || [[ -L "$inputrc_out_path" && "$inputrc_in_path" != "$(readlink "$inputrc_out_path")" ]]; then
-         echo "existing inputrc was backed up"
-         backup "$inputrc_out_path"
-      fi
-
-      ln -vs "$inputrc_in_path" "$inputrc_out_path"
-   } | indent
-}
-
-function theresnoplacelikehome () {
-   init_readline 
+theresnoplacelikehome () {
+   init_readline
    init_vim
 }
