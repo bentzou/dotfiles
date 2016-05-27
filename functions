@@ -39,6 +39,14 @@ function indent () {
    (( tabs >= 0 )) && sed "s/^/${spaces}/" || sed "s/^${spaces}//"
 }
 
+function join {
+   # join <delimiter> <strings...>
+
+   local IFS="$1"
+   shift
+   echo "$*"
+}
+
 function path () {
    # path [file|directory]
 
