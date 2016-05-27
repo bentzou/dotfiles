@@ -4,6 +4,7 @@
 red_b='\033[1;31m'
 green_b='\033[1;32m'
 lightblue='\033[94m'
+lightgreen='\033[92m'
 default='\033[0m'
 
 ps1_branch () {
@@ -24,6 +25,18 @@ ps1_branch () {
    echo '\['${color}'\]'${br}'\['${default}'\]'
 }
 
+ps1_virtualenv () {
+   # print python virtual environment
+   local virtualenv
+
+   # get env
+   [ -z "${VIRTUAL_ENV:-}" ] && return 1
+   virtualenv="$(basename $VIRTUAL_ENV)"
+
+   # print colorized env
+   echo -n '\['${green_b}'\]'"$virtualenv"'\['${default}'\]'
+}
+
 ps1_saymyname () {
    # print my name in color
    echo '\['${lightblue}'\]'"ben"'\['${default}'\]'
@@ -31,8 +44,8 @@ ps1_saymyname () {
 
 ps1_prefix () {
    # print branch if exists
-   local br="$(ps1_branch)"
-   [ -n "$br" ] && echo "$br" || ps1_saymyname
+   local prefixes=$(join , $(ps1_virtualenv) $(ps1_branch))
+   [ -n "$prefixes" ] && echo $prefixes || ps1_saymyname
 }
 
 prompt_cmd () {
