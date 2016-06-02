@@ -46,7 +46,7 @@ source "$SOURCE_DIR"/ps1
    
    alias gb="git branch"
    alias gd="git diff"
-   alias gl="git log --graph --decorate --pretty=oneline --abbrev-commit"
+   alias gl="git log -20 --graph --decorate --pretty=oneline --abbrev-commit"
    alias gs="git status"
    
    alias sbp="source $HOME/.bashrc_personal"
@@ -73,6 +73,7 @@ source "$SOURCE_DIR"/ps1
    ll () { CLICOLOR_FORCE=1 ls -alh "$@" | slw; }
 
    cd () { builtin cd "$@" && ll; }
+   cdd () { builtin cd "$(dirname $@)" && ll; }
    
    cl () { [ -d "$(glw)" ] && cd "$(glw)"; }
    vl () { local w; w="$(glw)"; [ -f "$w" ] && { echo vi $w; sleep 1 && vi "$w"; }; }
