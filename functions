@@ -20,8 +20,8 @@ function backup () {
    mv -iv "$in_path" "$out_path"
 }
 
-function change_terminal_title () {
-   # change_terminal_title <title>
+function set_terminal_title () {
+   # set_terminal_title <title>
 
    (( $# == 1 )) && echo -ne "\033]0;$1\007" || return 1
 }
