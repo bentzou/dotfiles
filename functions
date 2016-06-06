@@ -61,3 +61,7 @@ function rmcolor () {
 
 	sed $'s,\x1b\\[[0-9;]*[a-zA-Z],,g'
 }
+
+function strip () {
+   { (( $# == 0 )) && cat || echo "$*"; } | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//'
+}
