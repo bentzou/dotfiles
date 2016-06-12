@@ -73,12 +73,13 @@ set -o nounset
    viewcsv () { column -s, -t "$@" | less -c -#20 -N -S; }
    viewtsv () { column -s'\t' -t "$@" | less -c -#20 -N -S; }
 
+
 # LAST FILE
    # saves the last file of an 'ls' listing
    LASTFILE=/tmp/lastfile
    
    glw () { [ -f "$LASTFILE" ] && cat "$LASTFILE" 2>/dev/null; }
-   slw () { tee >(tail -1 | rmcolor | rev | cut -d' ' -f1 | rev > "$LASTFILE"); }
+   slw () { tee >(rmcolor | egrep -v "(\.|\.\.)$" | tail -1 | rev | cut -d' ' -f1 | rev > "$LASTFILE"); }
    
    lr () { CLICOLOR_FORCE=1 ls -alhtr "$@" | slw; }
    ll () { CLICOLOR_FORCE=1 ls -alh "$@" | slw; }
