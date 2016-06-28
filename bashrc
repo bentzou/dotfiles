@@ -47,6 +47,7 @@ set -o nounset
    
    # git
    alias gb="git branch"
+   alias gc="git checkout"
    alias gd="git diff"
    alias gl="git log -20 --graph --decorate --pretty=oneline --abbrev-commit"
    alias gs="git status"
