@@ -12,25 +12,39 @@ link_config () {
    local in_path="$1"
    local out_path="$2"
 
-   {
-      if [[ -L "$out_path" && "$in_path" == "$(readlink "$out_path")" ]]; then
-         echo "existing vimrc: $out_path -> $in_path"
-         return
-      fi
+   if [[ -L "$out_path" && "$in_path" == "$(readlink "$out_path")" ]]; then
+      echo "existing vimrc: $out_path -> $in_path"
+      return
+   fi
    
-      if [ -f "$out_path" ] || [[ -L "$out_path" && "$in_path" != "$(readlink "$out_path")" ]]; then
-         echo -n "existing $config_name was backed up"
-         backup "$out_path"
-      fi
+   if [ -f "$out_path" ] || [[ -L "$out_path" && "$in_path" != "$(readlink "$out_path")" ]]; then
+      echo -n "existing $config_name was backed up"
+      backup "$out_path"
+   fi
 
-      echo -n "new $config_name symlinked: "
-      ln -vs "$in_path" "$out_path"
+   echo -n "new $config_name symlinked: "
+   ln -vs "$in_path" "$out_path"
+}
+
+init_git () {
+   echo "Setting up git"
+
+   {
+      local cur_config="$(git config --global include.path 2>/dev/null)"
+      local new_config="$SOURCE_DIR/gitconfig"
+
+      if [ -z "$cur_config" ]; then
+         echo "gitconfig added to global gitconfig"
+         git config --global include.path "$SOURCE_DIR/gitconfig"
+      else
+         echo "existing gitconfig: $new_config"
+      fi
    } | indent
 }
 
 init_readline () {
    echo "Setting up inputrc"
-   link_config "$SOURCE_DIR/inputrc" "$HOME/.inputrc"
+   link_config "$SOURCE_DIR/inputrc" "$HOME/.inputrc" | indent
 }
 
 init_vim () {
@@ -50,10 +64,11 @@ init_vim () {
    } | indent
    
    # set up vimrc
-   link_config "$SOURCE_DIR/vimrc" "$HOME/.vimrc"
+   link_config "$SOURCE_DIR/vimrc" "$HOME/.vimrc" | indent
 }
 
 theresnoplacelikehome () {
    init_readline
+   init_git
    init_vim
 }
