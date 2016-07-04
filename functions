@@ -56,11 +56,28 @@ function path () {
    done
 }
 
+function append () {
+   # ... | endwith
+
+   [ -z "$*" ] && return 1
+
+   local suffix="$*"
+
+   awk '$0=$0"'$suffix'"'
+}
+
 function rmcolor () {
-   # do_something | rmcolor
+   # ... | rmcolor
 
 	sed $'s,\x1b\\[[0-9;]*[a-zA-Z],,g'
 }
+
+function endcolor () {
+   # ... | endcolor
+
+   append '\33[0m'
+}
+
 
 function strip () {
    { (( $# == 0 )) && cat || echo "$*"; } | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//'
