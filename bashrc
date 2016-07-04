@@ -62,7 +62,7 @@ set -o nounset
    f () { (( $# == 1 )) && find . -iname '*'"$(basename $1)"'*' | grep -i "$1"; }
 
    # grep recursively for string and output file matches
-   g () { case $# in 1) grep -ri "$1" .;; 2) grep -ri "$1" "$2";; esac | cut -c -$(tput cols); }
+   g () { case $# in 1) grep -ri "$1" .;; 2) grep -ri "$1" "$2";; esac | cut -c -$(tput cols) | endcolor; }
 
    # print full path for argument and copy to clipboard
    p () { local tmp="$(path "$@")"; echo "$tmp"; tmp=(${tmp[@]}); echo -n "${tmp[@]}" | pbcopy &>/dev/null; }
