@@ -57,9 +57,20 @@ set -o nounset
    alias vbp="vi $HOME/.bashrc_personal"
 
 
+# LAST FILE
+   # saves the last file of an 'ls' listing
+   LASTFILE=/tmp/lastfile
+   
+   glw () { [ -f "$LASTFILE" ] && cat "$LASTFILE" 2>/dev/null; }
+   slw () { tee >(rmcolor | egrep -v "(\.|\.\.)$" | tail -1 | rev | cut -d' ' -f1 | rev > "$LASTFILE"); }
+
+
 # FUNCTIONS
    # search recursively for file by case-insensitive name or relative path
    f () { (( $# == 1 )) && find . -iname '*'"$(basename $1)"'*' | grep -i "$1"; }
+
+   # search for java class file
+   fc () { (( $# == 1 )) && f "${1//.//}"; }
 
    # grep recursively for string and output file matches
    g () { case $# in 1) grep -ri "$1" .;; 2) grep -ri "$1" "$2";; esac | cut -c -$(tput cols) | endcolor; }
@@ -74,19 +85,12 @@ set -o nounset
    viewcsv () { column -s, -t "$@" | less -c -#20 -N -S; }
    viewtsv () { column -s'\t' -t "$@" | less -c -#20 -N -S; }
 
-
-# LAST FILE
-   # saves the last file of an 'ls' listing
-   LASTFILE=/tmp/lastfile
-   
-   glw () { [ -f "$LASTFILE" ] && cat "$LASTFILE" 2>/dev/null; }
-   slw () { tee >(rmcolor | egrep -v "(\.|\.\.)$" | tail -1 | rev | cut -d' ' -f1 | rev > "$LASTFILE"); }
-   
+   # navigation shortcuts
    lr () { CLICOLOR_FORCE=1 ls -alhtr "$@" | slw; }
    ll () { CLICOLOR_FORCE=1 ls -alh "$@" | slw; }
 
-   cd () { builtin cd "$@" && ll; }
-   cdd () { builtin cd "$(dirname $@)" && ll; }
+   cd () { builtin cd "$@" 2>/dev/null; (( $? != 0 )) && builtin cd "$(dirname $@)"; ll; }
    
    cl () { [ -d "$(glw)" ] && cd "$(glw)"; }
    vl () { local w; w="$(glw)"; [ -f "$w" ] && { echo vi $w; sleep 1 && vi "$w"; }; }
+
