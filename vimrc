@@ -30,7 +30,7 @@ syntax enable                    " enable syntax highlighting
 set background=dark              " dark background
 
 if v:version >= 703
-   colorscheme desert            " color scheme: desert 
+   colorscheme darkblue          " color scheme: desert 
 endif
 
 
