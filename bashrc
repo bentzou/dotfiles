@@ -37,6 +37,7 @@ set -o nounset
    alias ..='cd ..'
    alias ...='cd ../..'
    alias ....='cd ../../..'
+   alias cp='cp -i'
    alias grep='grep --color=always'
    alias rm='rm -i'
    alias mkdir='mkdir -pv'
@@ -82,8 +83,9 @@ set -o nounset
    pg () { (( $# == 1 )) && echo "ps -ef | grep -i $1" && ps -ef | grep -i $1; }
 
    # quickly view csv/tsv files with column formatting in less
-   viewcsv () { column -s, -t "$@" | less -c -#20 -N -S; }
+   viewcsv () { sed 's/,/ ,/g' | column -s, -t "$@" | less -c -#20 -N -S; }
    viewtsv () { column -s'\t' -t "$@" | less -c -#20 -N -S; }
+   viewpsv () { sed 's/|/ |/g' | column -s'|' -t "$@" | less -c -#20 -N -S; }
 
    # navigation shortcuts
    lr () { CLICOLOR_FORCE=1 ls -alhtr "$@" | slw; }
