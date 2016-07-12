@@ -1,7 +1,7 @@
 # remap prefix from 'C-b' to 'C-a'
 unbind C-b
-set-option -g prefix C-a
-bind-key C-a send-prefix
+set -g prefix C-Space
+bind Space send-prefix
 
 # set vi-mode
 set-window-option -g mode-keys vi
@@ -22,5 +22,10 @@ bind -r l select-pane -R
 bind -r s split-window -v
 bind -r v split-window -h
 
+set -g default-terminal "screen-256color"
+
+
 # reload config file (change file location to your the tmux.conf you want to use)
 bind r source-file ~/.tmux.conf
+
+

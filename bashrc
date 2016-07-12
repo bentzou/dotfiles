@@ -30,7 +30,7 @@ set -o nounset
    export LSCOLORS=gxfxcxdxbxegedabagacad
    
    # enable color for iTerm
-   export TERM=xterm-color
+   export TERM=screen-256color
 
 
 # ALIASES
