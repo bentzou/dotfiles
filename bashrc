@@ -42,6 +42,8 @@ set -o nounset
    alias rm='rm -i'
    alias mkdir='mkdir -pv'
    alias tf='tail -100f'
+   alias tm='tmux'
+   alias vi='vim'
    
    alias ecl='open -a eclipse'
    alias mci="mvn clean install"

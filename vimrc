@@ -5,6 +5,10 @@
 set ruler
 nmap ; :
 
+let mapleader = "\<Space>"
+nnoremap <Leader>w :w<CR>
+nnoremap <Leader>q :q<CR>
+
 " use jk to escape 
 inoremap jk <C-[>
 
@@ -62,6 +66,14 @@ nnoremap <silent> <C-h> gT
 "set mouse=a
 
 
+" Plugins
+map <Leader>nt :NERDTreeToggle<CR>```
+nnoremap <Leader>o :CtrlP<CR>
+
+vmap v <Plug>(expand_region_expand)
+vmap <C-v> <Plug>(expand_region_shrink)
+
+
 " Searching
 set hlsearch                     " highlight searches (use :noh to disable highlight)
 set ignorecase                   " ignore case when searching
@@ -95,6 +107,9 @@ set scrolloff=2                  " 2 lines above/below cursor when scrolling
 set showcmd                      " show command in bottom bar
 set showmatch                    " highlight matching [{()}]
 set showmode                     " show mode in status bar (insert/replace/...)
-" set title                        " show file in titlebar
+set title                        " show file in titlebar
 set wildmenu                     " visual autocomplete for command menu, e.g. autocomplete filenames for :e ~/.vim<TAB>
 set wrap                         " wrap lines
+
+
+execute pathogen#infect()
