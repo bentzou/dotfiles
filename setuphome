@@ -47,6 +47,11 @@ init_readline () {
    link_config "$SOURCE_DIR/inputrc" "$HOME/.inputrc" | indent
 }
 
+init_tmux () {
+   echo "Setting up tmux"
+   link_config "$SOURCE_DIR/tmuxconf" "$HOME/.tmux.conf" | indent
+}
+
 init_vim () {
    echo "Setting up vim"
    {
@@ -70,5 +75,6 @@ init_vim () {
 theresnoplacelikehome () {
    init_readline
    init_git
+   init_tmux
    init_vim
 }
