@@ -13,7 +13,7 @@ link_config () {
    local out_path="$2"
 
    if [[ -L "$out_path" && "$in_path" == "$(readlink "$out_path")" ]]; then
-      echo "existing vimrc: $out_path -> $in_path"
+      echo "existing $config_name: $out_path -> $in_path"
       return
    fi
    
