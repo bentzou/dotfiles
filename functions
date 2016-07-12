@@ -3,7 +3,9 @@
 set -o nounset
 
 function backup () {
-   # backup <file|directory> [suffix]
+   # usage: backup <file|directory> [suffix=.bkp]
+   # purpose: adds suffix to file or directory
+   # example: backup myfile
 
    (( $# == 1 || $# == 2 )) || return 1
 
@@ -21,14 +23,17 @@ function backup () {
 }
 
 function set_terminal_title () {
-   # set_terminal_title <title>
+   # usage: set_terminal_title <title>
+   # purpose: sets the terminal title
+   # example: set_terminal_title "my_title"
 
    (( $# == 1 )) && echo -ne "\033]0;$1\007" || return 1
 }
 
 function indent () {
-   # indent [num_tabs=1] [num_spaces_per_tab=3]
-   # do_something | indent
+   # usage: indent [num_tabs=1] [num_spaces_per_tab=3]
+   # purpose: indents every input line with spaces.
+   # example: echo hello world | indent
 
    (( 0 <= $# && $# <= 2 )) || return 1
 
@@ -40,7 +45,11 @@ function indent () {
 }
 
 function join {
-   # join <delimiter> <strings...>
+   # usage: join <delimiter> <strings...>
+   # purpose: joins a list of strings with a character delimiter
+   # example: join , hello world   # hello,world
+
+   (( $# < 2 )) && return 1
 
    local IFS="$1"
    shift
@@ -48,7 +57,9 @@ function join {
 }
 
 function path () {
-   # path [file|directory]
+   # usage: path [file|directory]
+   # purpose: prints pwd or the full path of an argument
+   # example: path pom.xml   # /project/pom.xml
 
    (( $# == 0 )) && pwd && return
    for filename in "${@:1}"; do
@@ -57,28 +68,33 @@ function path () {
 }
 
 function append () {
-   # ... | endwith
+   # usage: ... | append [suffix]
+   # purpose: append any string to every input line
+   # example: echo hello world | append " today"    # hello world today
 
-   [ -z "$*" ] && return 1
-
-   local suffix="$*"
-
-   awk '$0=$0"'$suffix'"'
+   awk '$0=$0"'"$*"'"'
 }
 
 function rmcolor () {
-   # ... | rmcolor
+   # usage: ... | rmcolor
+   # purpose: remove color escape codes from input
+   # example: create_color_output | rmcolor
 
 	sed $'s,\x1b\\[[0-9;]*[a-zA-Z],,g'
 }
 
 function endcolor () {
-   # ... | endcolor
+   # usage:  ... | endcolor
+   # purpose: end color output by appending default color code
+   # example: create_color_output | endcolor
 
    append '\33[0m'
 }
 
-
 function strip () {
+   # usage: ... | strip
+   # purpose: removes start and ending spaces
+   # example: echo " hello world " | strip
+
    { (( $# == 0 )) && cat || echo "$*"; } | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//'
 }
