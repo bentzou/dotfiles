@@ -38,6 +38,10 @@ if v:version >= 703
 endif
 
 
+" Editing
+set backspace=indent,eol,start
+
+
 " History
 set hidden                       " remember undo after quitting
 set history=1000
@@ -67,6 +71,8 @@ nnoremap <silent> <C-h> gT
 
 
 " Plugins
+filetype plugin on
+
 map <Leader>nt :NERDTreeToggle<CR>```
 nnoremap <Leader>o :CtrlP<CR>
 

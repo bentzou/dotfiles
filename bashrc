@@ -2,8 +2,9 @@
 
 set -o nounset
 
+
 # IMPORTS
-   SOURCE_DIR="$(builtin cd "$(dirname "${BASH_SOURCE[0]}")" && builtin pwd)"
+   SOURCE_DIR="$(b=${BASH_SOURCE[0]}; dirname $(readlink $b || echo $b))"
    source "$SOURCE_DIR"/functions
    source "$SOURCE_DIR"/setuphome
    source "$SOURCE_DIR"/ps1
@@ -39,8 +40,9 @@ set -o nounset
    alias ....='cd ../../..'
    alias cp='cp -i'
    alias grep='grep --color=always'
-   alias rm='rm -i'
    alias mkdir='mkdir -pv'
+   alias mv='mv -i'
+   alias rm='rm -i'
    alias tf='tail -100f'
    alias tm='tmux'
    alias vi='vim'
@@ -56,8 +58,11 @@ set -o nounset
    alias gs="git status"
    
    # bashrc
-   alias sbp="source $HOME/.bashrc_personal"
-   alias vbp="vi $HOME/.bashrc_personal"
+   alias sbp="source $SOURCE_DIR/bashrc"
+   alias vbp="vi $SOURCE_DIR/bashrc"
+
+   # ssh
+   alias vsc="vi $HOME/.ssh/config"
 
 
 # LAST FILE
