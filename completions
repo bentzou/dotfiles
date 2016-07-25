@@ -1,8 +1,68 @@
-_ssh () {
-   local cur="${COMP_WORDS[COMP_CWORD]}";
-   local hosts="$(awk '/^Host/ {print $2}' $HOME/.ssh/config)"
-   COMPREPLY=($(compgen -W "$hosts" -- ${cur}))
+#!/bin/bash
+
+
+# support completion method
+_complete_using () {
+   local cur="${COMP_WORDS[COMP_CWORD]}"
+   COMPREPLY=($(compgen -W "$1" -- ${cur}))
 }
 
-complete -F _ssh ssh
 
+# SSH
+# completion entrypoint
+_ssh () {
+   local hosts="$(awk '/^Host/ {print $2}' $HOME/.ssh/config)"
+   (( COMP_CWORD == 1 )) && _complete_using "$hosts"
+}
+
+
+# GIT
+# support methods
+_git_branches () {
+   echo -e "$(git branch | tr '*' ' ' | awk '{print $1}')"
+}
+
+_git_unstaged_files () {
+   echo -e "$(git status --porcelain | awk '{print $2}')"
+}
+
+# supported commands
+_git_add () {
+   _complete_using "$(_git_unstaged_files)"
+}
+
+_git_branch () {
+   (( COMP_CWORD == 2 )) && _complete_using "$(_git_branches)"
+}
+
+_git_checkout () {
+   (( COMP_CWORD == 2 )) && _complete_using "$(_git_branches)"
+}
+
+_git_commit () {
+   (( COMP_CWORD == 2 )) && _complete_using "-m"
+}
+
+# completion entrypoint
+_git () {
+   ! git branch &>/dev/null && return
+
+   local supported_commands="add branch checkout commit status"
+   if (( COMP_CWORD == 1 )); then
+      _complete_using "$supported_commands"
+      return
+   fi
+
+   local git_command="${COMP_WORDS[1]}"
+   case "$git_command" in
+      "add")      _git_add;;
+      "branch")   _git_branch;;
+      "checkout") _git_checkout;;
+      "commit")   _git_commit;;
+   esac
+}
+
+
+# ENABLE COMPLETIONS
+complete -F _ssh ssh
+complete -F _git git
