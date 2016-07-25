@@ -20,3 +20,6 @@ Space: magic-space
 # cycle through completions with Shift-Tab
 "\e[Z": menu-complete
 
+# cd up and down the current path
+"\e\e[A": "cd_up\n"
+"\e\e[B": "cd_dn\n"
