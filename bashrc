@@ -5,9 +5,10 @@ set -o nounset
 
 # IMPORTS
    SOURCE_DIR="$(b=${BASH_SOURCE[0]}; dirname $(readlink $b || echo $b))"
+   source "$SOURCE_DIR"/completions
    source "$SOURCE_DIR"/functions
-   source "$SOURCE_DIR"/setuphome
    source "$SOURCE_DIR"/ps1
+   source "$SOURCE_DIR"/setuphome
 
 
 # PATHS
@@ -15,9 +16,6 @@ set -o nounset
 
 
 # MISC SHELL OPTIONS
-   # auto-expands any commands starting with ! after hitting space
-   bind Space:magic-space
-   
    # allow forward searching in history using C-s (vs C-r for backward)
    stty -ixon
 

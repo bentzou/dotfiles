@@ -34,7 +34,7 @@ ps1_virtualenv () {
    virtualenv="$(basename $VIRTUAL_ENV)"
 
    # print colorized env
-   echo -n '\['${green_b}'\]'"$virtualenv"'\['${default}'\]'
+   echo '\['${green_b}'\]'"$virtualenv"'\['${default}'\]'
 }
 
 ps1_saymyname () {

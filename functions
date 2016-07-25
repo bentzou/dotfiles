@@ -31,7 +31,7 @@ function set_terminal_title () {
 }
 
 function indent () {
-   # usage: indent [num_tabs=1] [num_spaces_per_tab=3]
+   # usage: ... | indent [num_tabs=1] [num_spaces_per_tab=3]
    # purpose: indents every input line with spaces.
    # example: echo hello world | indent
 
@@ -44,7 +44,7 @@ function indent () {
    (( tabs >= 0 )) && sed "s/^/${spaces}/" || sed "s/^${spaces}//"
 }
 
-function join {
+function join () {
    # usage: join <delimiter> <strings...>
    # purpose: joins a list of strings with a character delimiter
    # example: join , hello world   # hello,world

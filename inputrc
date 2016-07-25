@@ -13,3 +13,10 @@ set match-hidden-files off
 # list all matches with one tab
 set show-all-if-ambiguous on
 set show-all-if-unmodified on
+
+# auto-expand commands starting with ! after hitting space
+Space: magic-space
+
+# cycle through completions with Shift-Tab
+"\e[Z": menu-complete
+
