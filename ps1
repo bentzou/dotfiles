@@ -50,7 +50,6 @@ ps1_prefix () {
 
 prompt_cmd () {
    PS1="$(ps1_prefix)\[${lightblue}\] \w> \[\e[m\]"
-   uptown_set_path
 }
 
-PROMPT_COMMAND=prompt_cmd
+PROMPT_COMMAND="prompt_cmd"
