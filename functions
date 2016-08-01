@@ -98,3 +98,12 @@ function strip () {
 
    { (( $# == 0 )) && cat || echo "$*"; } | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//'
 }
+
+function press_any_to_continue () {
+   # usage: press_any_to_continue [prompt]
+   # purpose: press any to continue
+   # example: press_any_to_continue "Press enter to continue... "
+
+   read -n1 -r -s -p "${*:-}"
+   echo
+}
