@@ -9,6 +9,7 @@ set -o nounset
    source "$SOURCE_DIR"/functions
    source "$SOURCE_DIR"/ps1
    source "$SOURCE_DIR"/setuphome
+   source "$SOURCE_DIR"/uptown
 
 
 # PATHS
@@ -21,13 +22,13 @@ set -o nounset
 
    # enable color in the terminal bash shell
    export CLICOLOR=1
-   
+
    # bash history: ignore duplicate commands, erase previous duplicates
    export HISTCONTROL=ignoredups:erasedups
-   
+
    # set up the color scheme for ls
    export LSCOLORS=gxfxcxdxbxegedabagacad
-   
+
    # enable color for iTerm
    export TERM=screen-256color
 
@@ -44,17 +45,17 @@ set -o nounset
    alias tf='tail -100f'
    alias tm='tmux'
    alias vi='vim'
-   
+
    alias ecl='open -a eclipse'
    alias mci="mvn clean install"
-   
+
    # git
    alias gb="git branch"
    alias gc="git checkout"
    alias gd="git diff"
    alias gl="git log -20 --graph --decorate --pretty=oneline --abbrev-commit"
    alias gs="git status"
-   
+
    # bashrc
    alias sbp="source $SOURCE_DIR/bashrc"
    alias vbp="vi $SOURCE_DIR/bashrc"
@@ -64,16 +65,16 @@ set -o nounset
 
 
 # LAST FILE
-   # saves the last file of an 'ls' listing
-   LASTFILE=/tmp/lastfile
-   
-   glw () { [ -f "$LASTFILE" ] && cat "$LASTFILE" 2>/dev/null; }
-   slw () { tee >(rmcolor | egrep -v "(\.|\.\.)$" | tail -1 | rev | cut -d' ' -f1 | rev > "$LASTFILE"); }
+   # saves the last word from the last line of a list
+   LASTWORD=/tmp/lastword
+
+   glw () { [ -f "$LASTWORD" ] && cat "$LASTWORD" 2>/dev/null; }
+   slw () { tee >(rmcolor | egrep -v "(\.|\.\.)$" | tail -1 | rev | cut -d' ' -f1 | rev > "$LASTWORD"); }
 
 
 # FUNCTIONS
    # search recursively for file by case-insensitive name or relative path
-   f () { (( $# == 1 )) && find . -iname '*'"$(basename $1)"'*' | grep -i "$1"; }
+   f () { (( $# == 1 )) && find . -iname '*'"$(basename $1)"'*' | grep -i "$1" | slw; }
 
    # search for java class file
    fc () { (( $# == 1 )) && f "${1//.//}"; }
@@ -97,7 +98,6 @@ set -o nounset
    ll () { CLICOLOR_FORCE=1 ls -alh "$@" | slw; }
 
    cd () { builtin cd "$@" 2>/dev/null; (( $? != 0 )) && builtin cd "$(dirname $@)"; ll; }
-   
+
    cl () { [ -d "$(glw)" ] && cd "$(glw)"; }
    vl () { local w; w="$(glw)"; [ -f "$w" ] && { echo vi $w; sleep 1 && vi "$w"; }; }
-
