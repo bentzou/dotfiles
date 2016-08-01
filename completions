@@ -23,7 +23,7 @@ _git_branches () {
 }
 
 _git_unstaged_files () {
-   echo -e "$(git status --porcelain | awk '{print $2}')"
+   echo -e "$(git status -s | cut -c4-)"
 }
 
 # supported commands
@@ -43,11 +43,15 @@ _git_commit () {
    (( COMP_CWORD == 2 )) && _complete_using "-m"
 }
 
+_git_diff () {
+   (( COMP_CWORD == 2 )) && _complete_using "--cached"
+}
+
 # completion entrypoint
 _git () {
    ! git branch &>/dev/null && return
 
-   local supported_commands="add branch checkout commit status"
+   local supported_commands="add branch checkout commit diff pull status"
    if (( COMP_CWORD == 1 )); then
       _complete_using "$supported_commands"
       return
@@ -59,6 +63,7 @@ _git () {
       "branch")   _git_branch;;
       "checkout") _git_checkout;;
       "commit")   _git_commit;;
+      "diff")     _git_diff;;
    esac
 }
 
