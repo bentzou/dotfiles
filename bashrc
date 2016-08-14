@@ -100,4 +100,4 @@ set -o nounset
    cd () { builtin cd "$@" 2>/dev/null; (( $? != 0 )) && builtin cd "$(dirname $@)"; ll; }
 
    cl () { [ -d "$(glw)" ] && cd "$(glw)"; }
-   vl () { local w; w="$(glw)"; [ -f "$w" ] && { echo vi $w; sleep 1 && vi "$w"; }; }
+   vl () { local w; w="$(glw)"; [ -f "$w" ] && { press_any_to_continue "vi $w"; echo; [ "$i" != "q" ] && vi "$w"; }; }
