@@ -70,4 +70,5 @@ _git () {
 
 # ENABLE COMPLETIONS
 complete -F _ssh ssh
-complete -F _git git
+complete -o default -F _git git
+complete -o plusdirs -f -X '!*.py' python
