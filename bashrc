@@ -9,7 +9,8 @@ set -o nounset
    source "$SOURCE_DIR"/functions
    source "$SOURCE_DIR"/ps1
    source "$SOURCE_DIR"/setuphome
-   source "$SOURCE_DIR"/uptown
+   source "$SOURCE_DIR"/modules/uptown/uptown
+   source "$SOURCE_DIR"/modules/flash/flash
 
 
 # PATHS
@@ -38,7 +39,6 @@ set -o nounset
    alias ...='cd ../..'
    alias ....='cd ../../..'
    alias cp='cp -i'
-   alias grep='grep --color=always'
    alias mkdir='mkdir -pv'
    alias mv='mv -i'
    alias rm='rm -i'
@@ -47,7 +47,8 @@ set -o nounset
    alias vi='vim'
 
    alias ecl='open -a eclipse'
-   alias mci="mvn clean install"
+   alias mcc="mvn clean compile"
+   alias mci="mvn -quiet clean install"
 
    # git
    alias gb="git branch"
@@ -73,14 +74,12 @@ set -o nounset
 
 
 # FUNCTIONS
-   # search recursively for file by case-insensitive name or relative path
-   f () { (( $# == 1 )) && find . -iname '*'"$(basename $1)"'*' | grep -i "$1" | slw; }
+   # fast find and grep
+   f () { flash_find "$@" | slw; }
+   g () { flash_grep "$@"; }
 
    # search for java class file
    fc () { (( $# == 1 )) && f "${1//.//}"; }
-
-   # grep recursively for string and output file matches
-   g () { case $# in 1) grep -ri "$1" .;; 2) grep -ri "$1" "$2";; esac | cut -c -$(tput cols) | endcolor; }
 
    # print full path for argument and copy to clipboard
    p () { local tmp="$(path "$@")"; echo "$tmp"; tmp=(${tmp[@]}); echo -n "${tmp[@]}" | pbcopy &>/dev/null; }
