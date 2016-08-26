@@ -108,6 +108,14 @@ function press_any_to_continue () {
    echo
 }
 
+function ca_date () {
+   # purpose: prints date for California
+   # usage: ca_date
+   # example: ca_date
+
+   TZ=America/Los_Angeles date
+}
+
 function lines () {
    # purpose: prints lines for line numbers start to end
    # usage: ... | lines <start> [end=EOF]
@@ -118,5 +126,6 @@ function lines () {
    (( $# < 1 || $# > 3 )) && return 1
    (( $# >= 2 )) && (( $1 > $2 )) && return 1
 
-   sed -n ${1},${2:-$}p $((( $# == 3 )) && echo "$3")
+   sed -n "${1},${2:-$}p" $( (( $# == 3 )) && echo "$3" )
 }
+
