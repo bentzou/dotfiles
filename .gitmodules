@@ -4,3 +4,6 @@
 [submodule "modules/flash"]
 	path = modules/flash
 	url = https://github.com/bentzou/flash
+[submodule "modules/backtothefolder"]
+	path = modules/backtothefolder
+	url = https://github.com/bentzou/backtothefolder.git

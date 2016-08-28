@@ -11,6 +11,7 @@ set -o nounset
    source "$SOURCE_DIR"/setuphome
    source "$SOURCE_DIR"/modules/uptown/uptown
    source "$SOURCE_DIR"/modules/flash/flash
+   source "$SOURCE_DIR"/modules/backtothefolder/bttf
 
 
 # PATHS
@@ -46,9 +47,16 @@ set -o nounset
    alias tm='tmux'
    alias vi='vim'
 
+   # ide
    alias ecl='open -a eclipse'
+
+   # maven
+   export MAVEN_OPTS="-XX:+TieredCompilation -XX:TieredStopAtLevel=1"
+   alias mvn="mvn -Dbuildtime.output.log=true -T 4 --offline -Dmaven.compile.fork=true -Dmaven.junit.fork=true -Dmaven.junit.jvmargs=-Xmx512m"
    alias mcc="mvn clean compile"
-   alias mci="mvn -quiet clean install"
+   alias mci="mvn clean install"
+   alias mi="mvn install -DskipTests"
+   alias mt="mvn surefire:test failsafe:integration-test"
 
    # git
    alias gb="git branch"
