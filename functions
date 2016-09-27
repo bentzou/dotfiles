@@ -70,9 +70,17 @@ function path () {
 function append () {
    # purpose: appends suffix to every input line
    # usage: ... | append [suffix]
-   # example: echo hello world | append " today"    # hello world today
+   # example: echo hello | append " world"      # hello world
 
    awk '$0=$0"'"$*"'"'
+}
+
+function prepend () {
+   # purpose: prepends prefix to every input line
+   # usage: ... | prepend [prefix]
+   # example: echo world | prepend "hello "     # hello world
+
+   awk '$0="'"$*"'"$0'
 }
 
 function rmcolor () {
@@ -104,8 +112,9 @@ function press_any_to_continue () {
    # usage: press_any_to_continue [prompt]
    # example: press_any_to_continue "Press enter to continue... "
 
-   read -n1 -r -s -p "${*:-}"
+   read -n1 -r -s -p "${*:-}" char
    echo
+   [ "$char" != "q" ]
 }
 
 function ca_date () {

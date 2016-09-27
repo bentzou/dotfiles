@@ -39,6 +39,7 @@ set -o nounset
    alias ..='cd ..'
    alias ...='cd ../..'
    alias ....='cd ../../..'
+   alias c='cd ~/Code'
    alias cp='cp -i'
    alias mkdir='mkdir -pv'
    alias mv='mv -i'
@@ -52,7 +53,7 @@ set -o nounset
 
    # maven
    export MAVEN_OPTS="-XX:+TieredCompilation -XX:TieredStopAtLevel=1"
-   alias mvn="mvn -Dbuildtime.output.log=true -T 4 --offline -Dmaven.compile.fork=true -Dmaven.junit.fork=true -Dmaven.junit.jvmargs=-Xmx512m"
+   #alias mvn="mvn -q -Dbuildtime.output.log=true -T 4 --offline -Dmaven.compile.fork=true -Dmaven.junit.fork=true -Dmaven.junit.jvmargs=-Xmx512m"
    alias mcc="mvn clean compile"
    alias mci="mvn clean install"
    alias mi="mvn install -DskipTests"
@@ -64,6 +65,7 @@ set -o nounset
    alias gd="git diff"
    alias gl="git log -20 --graph --decorate --pretty=oneline --abbrev-commit"
    alias gs="git status"
+   alias gsl="git stash list"
 
    # bashrc
    alias sbp="source $SOURCE_DIR/bashrc"
@@ -85,6 +87,7 @@ set -o nounset
    # fast find and grep
    f () { flash_find "$@" | slw; }
    g () { flash_grep "$@"; }
+   fv () { f "$@"; vl; }
 
    # search for java class file
    fc () { (( $# == 1 )) && f "${1//.//}"; }
@@ -107,4 +110,4 @@ set -o nounset
    cd () { builtin cd "$@" 2>/dev/null; (( $? != 0 )) && builtin cd "$(dirname $@)"; ll; }
 
    cl () { [ -d "$(glw)" ] && cd "$(glw)"; }
-   vl () { local w; w="$(glw)"; [ -f "$w" ] && { press_any_to_continue "vi $w"; echo; [ "$i" != "q" ] && vi "$w"; }; }
+   vl () { local w; w="$(glw)"; [ -f "$w" ] && { press_any_to_continue "vi $w" && echo && vi "$w"; }; }
