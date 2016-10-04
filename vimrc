@@ -74,7 +74,10 @@ nnoremap <silent> <C-h> gT
 filetype plugin on
 
 map <Leader>nt :NERDTreeToggle<CR>```
+
+" CtrlP
 nnoremap <Leader>o :CtrlP<CR>
+let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
 
 vmap v <Plug>(expand_region_expand)
 vmap <C-v> <Plug>(expand_region_shrink)
