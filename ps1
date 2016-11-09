@@ -48,8 +48,8 @@ ps1_prefix () {
    [ -n "$prefixes" ] && echo $prefixes || ps1_saymyname
 }
 
-prompt_cmd () {
+ps1 () {
    PS1="$(ps1_prefix)\[${lightblue}\] \w> \[\e[m\]"
 }
 
-PROMPT_COMMAND="prompt_cmd"
+PROMPT_COMMAND="${PROMPT_COMMAND:-:}; ps1"

@@ -41,6 +41,7 @@ set -o nounset
    alias ....='cd ../../..'
    alias c='cd ~/Code'
    alias cp='cp -i'
+   alias ds='find . -type d'
    alias mkdir='mkdir -pv'
    alias mv='mv -i'
    alias rm='rm -i'
@@ -67,12 +68,31 @@ set -o nounset
    alias gs="git status"
    alias gsl="git stash list"
 
+   # vagrant
+   alias vd="vagrant destroy"
+   alias vu="vagrant up"
+   alias vp="vagrant provision"
+
    # bashrc
    alias sbp="source $SOURCE_DIR/bashrc"
    alias vbp="vi $SOURCE_DIR/bashrc"
 
    # ssh
    alias vsc="vi $HOME/.ssh/config"
+
+
+# GIT
+git_repo_name () {
+   local repo_dir=$(git rev-parse --show-toplevel 2>/dev/null)
+   [ -n "$repo_dir" ] && basename "$repo_dir"
+}
+
+set_term_to_repo () {
+   local repo_name=$(git_repo_name)
+   set_terminal_title "${repo_name:-}"
+}
+
+set_prompt_command set_term_to_repo
 
 
 # LAST FILE
@@ -109,5 +129,5 @@ set -o nounset
 
    cd () { builtin cd "$@" 2>/dev/null; (( $? != 0 )) && builtin cd "$(dirname $@)"; ll; }
 
-   cl () { [ -d "$(glw)" ] && cd "$(glw)"; }
+   cl () { cd "$(glw)"; }
    vl () { local w; w="$(glw)"; [ -f "$w" ] && { press_any_to_continue "vi $w" && echo && vi "$w"; }; }
