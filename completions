@@ -48,7 +48,7 @@ _git () {
          "checkout") _complete_using "$(_git_branches)";;
          "commit")   _complete_using "-m";;
          "diff")     _complete_using "--cached";;
-         "unstage")  _complete_using $(_git_staged_files);;
+         "unstage")  _complete_using "$(_git_staged_files)";;
       esac
    fi
 }
