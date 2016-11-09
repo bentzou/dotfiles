@@ -22,12 +22,16 @@ function backup () {
    mv -iv "$in_path" "$out_path"
 }
 
+function set_prompt_command () {
+   (( $# == 1 )) && PROMPT_COMMAND="${PROMPT_COMMAND:-:}; $1"
+}
+
 function set_terminal_title () {
    # purpose: sets the terminal title
    # usage: set_terminal_title <title>
    # example: set_terminal_title "my_title"
 
-   (( $# == 1 )) && echo -ne "\033]0;$1\007" || return 1
+   (( $# == 1 )) && echo -ne "\033]0;$1\007"
 }
 
 function indent () {
