@@ -112,7 +112,7 @@ set tabstop=3                    " number of visual spaces per tab
 set cursorline                   " highlight current line
 set lazyredraw                   " no redraws in macros
 set number                       " show line numbers
-set scrolloff=2                  " 2 lines above/below cursor when scrolling
+set scrolloff=5                  " 2 lines above/below cursor when scrolling
 set showcmd                      " show command in bottom bar
 set showmatch                    " highlight matching [{()}]
 set showmode                     " show mode in status bar (insert/replace/...)

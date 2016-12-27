@@ -57,6 +57,7 @@ set -o nounset
    #alias mvn="mvn -q -Dbuildtime.output.log=true -T 4 --offline -Dmaven.compile.fork=true -Dmaven.junit.fork=true -Dmaven.junit.jvmargs=-Xmx512m"
    alias mcc="mvn clean compile"
    alias mci="mvn clean install"
+   #alias mci="mvn clean install -Dlog4j.configuration=file:/Users/bentzou/Code/log4j.xml"
    alias mi="mvn install -DskipTests"
    alias mt="mvn surefire:test failsafe:integration-test"
 
@@ -130,4 +131,4 @@ set_prompt_command set_term_to_repo
    cd () { builtin cd "$@" 2>/dev/null; (( $? != 0 )) && builtin cd "$(dirname $@)"; ll; }
 
    cl () { cd "$(glw)"; }
-   vl () { local w; w="$(glw)"; [ -f "$w" ] && { press_any_to_continue "vi $w" && echo && vi "$w"; }; }
+   vl () { local w; w="$(glw)"; [ -f "$w" ] && press_any_to_continue "vi $w" && { echo; vi "$w"; history -s "vi $w"; }; }

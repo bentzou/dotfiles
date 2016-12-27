@@ -12,7 +12,7 @@ _complete_using () {
 # completion entrypoint
 _ssh () {
    local hosts="$(awk '/^Host/ {print $2}' $HOME/.ssh/config)"
-   (( COMP_CWORD == 1 )) && _complete_using "$hosts"
+   _complete_using "$hosts"
 }
 
 
