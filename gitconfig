@@ -5,4 +5,8 @@
    st = status
 
    last = log -1 HEAD
+   prune = fetch --prune
    unstage = reset HEAD --
+
+[status]
+   showUntrackedFiles = all
