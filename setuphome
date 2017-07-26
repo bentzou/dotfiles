@@ -72,7 +72,18 @@ init_vim () {
    link_config "$SOURCE_DIR/vimrc" "$HOME/.vimrc" | indent
 }
 
+init_hushlogin () {
+   echo "Setting up hushlogin"
+
+   if [ ! -f "$HOME/.hushlogin" ]; then
+      touch "$HOME/.hushlogin"
+   else
+      echo "existing .hushlogin"
+   fi | indent
+}
+
 theresnoplacelikehome () {
+   init_hushlogin
    init_readline
    init_git
    init_tmux
