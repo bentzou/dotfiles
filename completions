@@ -47,7 +47,7 @@ _git_unstaged_files () {
 _git () {
    git branch &>/dev/null || return
 
-   local supported_commands="add branch checkout commit diff pull status unstage"
+   local supported_commands="add branch checkout commit diff pull rebase status unstage"
    if (( COMP_CWORD == 1 )); then
       _complete_using "$supported_commands"
       return
@@ -61,6 +61,7 @@ _git () {
          "checkout") _complete_using "$(_git_branches)";;
          "commit")   _complete_using "-m";;
          "diff")     _complete_using "--cached";;
+         "rebase")   _complete_using "--continue";;
          "unstage")  _complete_using "$(_git_staged_files)";;
       esac
    fi
