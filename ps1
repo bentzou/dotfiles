@@ -44,7 +44,7 @@ ps1_saymyname () {
 
 ps1_prefix () {
    # print branch if exists
-   local prefixes=$(join , $(ps1_virtualenv) "$(ps1_branch)")
+   local prefixes=$(join , $(ps1_virtualenv) $(ps1_branch))
    [ -n "$prefixes" ] && echo $prefixes || ps1_saymyname
 }
 
