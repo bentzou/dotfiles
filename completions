@@ -18,21 +18,15 @@ _ssh () {
    _complete_using "$(_ssh_hosts)"
 }
 
-_scp () {
-   if (( COMP_CWORD == 2 )); then
-      local src_path="${COMP_WORDS[1]}"
-
-      if [[ "${src_path}" != *":"* ]]; then
-         _complete_using "$(_ssh_hosts)"
-      fi
-   fi
-}
-
 
 # GIT
 # support methods
 _git_branches () {
    echo -e "$(git branch | tr '*' ' ' | awk '{print $1}')"
+}
+
+_git_current_branch () {
+   git branch | awk -F' ' '/^\*/ {print $2}'
 }
 
 _git_staged_files () {
@@ -47,7 +41,7 @@ _git_unstaged_files () {
 _git () {
    git branch &>/dev/null || return
 
-   local supported_commands="add branch checkout commit diff pull rebase status unstage"
+   local supported_commands="add blame branch checkout commit diff pull push rebase status unstage"
    if (( COMP_CWORD == 1 )); then
       _complete_using "$supported_commands"
       return
@@ -61,6 +55,7 @@ _git () {
          "checkout") _complete_using "$(_git_branches)";;
          "commit")   _complete_using "-m";;
          "diff")     _complete_using "--cached";;
+         "push")     _complete_using "--set-upstream origin $(_git_current_branch)";;
          "rebase")   _complete_using "--continue";;
          "unstage")  _complete_using "$(_git_staged_files)";;
       esac
@@ -68,8 +63,55 @@ _git () {
 }
 
 
+# JAVA
+_java () {
+   if (( COMP_CWORD == 1 )); then
+      _complete_using "-jar"
+      return
+   fi
+
+   if (( COMP_CWORD == 2 )); then
+      local jar_param="${COMP_WORDS[1]}"
+      case "$jar_param" in
+         "-jar")  _complete_using "$(find . -iname "*.jar")"
+      esac
+   fi
+}
+
+
+# MAKEFILE
+_make () {
+   [ -f Makefile ] || return
+   _complete_using "$(make -pnr | egrep '^[a-zA-Z0-9\-]*:' | cut -d: -f1 | grep -v Makefile)"
+}
+
+
+# MAVEN
+_mvn () {
+   [ -f pom.xml ] || return
+
+   local supported_commands="clean compile test package install"
+   if (( COMP_CWORD == 1 )); then
+      _complete_using "$supported_commands"
+      return
+   fi
+
+   if (( COMP_CWORD >= 2 )); then
+      local last_index=$((COMP_CWORD-1))
+      local phase="${COMP_WORDS[$last_index]}"
+
+      case "$phase" in
+         "install")  _complete_using "-DskipTests";;
+         *)          _complete_using "$supported_commands -DskipTests";;
+      esac
+   fi
+}
+
+
 # ENABLE COMPLETIONS
+complete -F _java java
+complete -F _make make
+complete -F _mvn mvn
 complete -F _ssh ssh
-complete -o default -F _scp scp
 complete -o default -F _git git
 complete -o plusdirs -f -X '!*.py' python
