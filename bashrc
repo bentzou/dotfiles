@@ -39,7 +39,6 @@ set -o nounset
    alias ..='cd ..'
    alias ...='cd ../..'
    alias ....='cd ../../..'
-   alias c='cd ~/Code'
    alias cp='cp -i'
    alias ds='find . -type d'
    alias mkdir='mkdir -pv'
@@ -49,12 +48,21 @@ set -o nounset
    alias tm='tmux'
    alias vi='vim'
 
+   function _code_dirs() {
+      local cur="${COMP_WORDS[COMP_CWORD]}"
+      local repos="$(find "$HOME/Code" -type d -maxdepth 1 -not -path '*/\.*' | xargs basename)"
+      COMPREPLY=($(compgen -W "$repos" -- ${cur}))
+   }
+   
+   complete -F _code_dirs c
+
+   function c () { cd ~/Code/${1:-}; }
+
    # ide
    alias ecl='open -a eclipse'
 
    # maven
    export MAVEN_OPTS="-XX:+TieredCompilation -XX:TieredStopAtLevel=1"
-   #alias mvn="mvn -q -Dbuildtime.output.log=true -T 4 --offline -Dmaven.compile.fork=true -Dmaven.junit.fork=true -Dmaven.junit.jvmargs=-Xmx512m"
    alias mcc="mvn clean compile"
    alias mci="mvn clean install"
    #alias mci="mvn clean install -Dlog4j.configuration=file:/Users/bentzou/Code/log4j.xml"
@@ -62,7 +70,8 @@ set -o nounset
    alias mt="mvn surefire:test failsafe:integration-test"
 
    # git
-   alias gb="git branch"
+   alias ga="git add"
+   alias gb="git branch --sort=-committerdate"
    alias gc="git checkout"
    alias gd="git diff"
    alias gl="git log -20 --graph --decorate --pretty=oneline --abbrev-commit"
