@@ -121,4 +121,8 @@ set wildmenu                     " visual autocomplete for command menu, e.g. au
 set wrap                         " wrap lines
 
 
-execute pathogen#infect()
+" Pathogen
+runtime! autoload/pathogen.vim
+if exists("*pathogen#infect")
+   call pathogen#infect()
+endif
