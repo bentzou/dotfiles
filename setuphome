@@ -76,7 +76,7 @@ init_vim () {
    echo "Setting up vim"
    {
       # set up directories
-      declare -a vim_dirs=("$HOME/.vim" "$HOME/.vim/undodir")
+      declare -a vim_dirs=("$HOME/.vim" "$HOME/.vim/undodir" "$HOME/.vim/autoload" "$HOME/.vim/bundle")
       local vim_dir
 
       for vim_dir in "${vim_dirs[@]}"; do
@@ -86,10 +86,18 @@ init_vim () {
             mkdir -pv "$vim_dir"
          fi
       done
+
+      # install pathogen
+      if [ ! -f "$HOME/.vim/autoload/pathogen.vim" ]; then
+         curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
+         [ $? -eq 0 ] && echo "pathogen installed" || echo "error installing pathogen"
+      else
+         echo "existing pathogen install"
+      fi
+      
+      # set up vimrc
+      link_config "$SOURCE_DIR/vimrc" "$HOME/.vimrc"
    } | indent
-   
-   # set up vimrc
-   link_config "$SOURCE_DIR/vimrc" "$HOME/.vimrc" | indent
 }
 
 init_hushlogin () {
