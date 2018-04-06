@@ -26,6 +26,26 @@ link_config () {
    ln -vs "$in_path" "$out_path"
 }
 
+init_bash () {
+   echo "Setting up bashrc"
+
+   {
+      if [ ! -f  "$HOME/.bash_profile" ]; then
+         touch "$HOME/.bash_profile"
+         echo "new .bash_profile created"
+      else
+         echo "existing .bash_profile"
+      fi
+
+      if ! grep "source '$SOURCE_DIR/bashrc'" "$HOME/.bash_profile" >/dev/null; then
+         echo "source '$SOURCE_DIR/bashrc'" >> "$HOME/.bash_profile"
+         echo "bashrc added to bash profile"
+      else
+         echo "existing source bashrc"
+      fi
+   } | indent
+}
+
 init_git () {
    echo "Setting up git"
 
@@ -83,9 +103,12 @@ init_hushlogin () {
 }
 
 theresnoplacelikehome () {
+   init_bash
    init_hushlogin
    init_readline
    init_git
    init_tmux
    init_vim
+
+   source "$HOME/.bash_profile"
 }
