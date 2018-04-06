@@ -8,5 +8,8 @@
    prune = fetch --prune
    unstage = reset HEAD --
 
+[push]
+   default = current
+
 [status]
    showUntrackedFiles = all
