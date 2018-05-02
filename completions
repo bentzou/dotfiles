@@ -71,14 +71,14 @@ _git () {
    if (( COMP_CWORD == 2 )); then
       local git_command="${COMP_WORDS[1]}"
       case "$git_command" in
-         "add")      _complete_using "$(_git_unstaged_files)";;
-         "branch")   _complete_using "$(_git_branches)";;
-         "checkout") _complete_using "$(_git_branches)";;
-         "commit")   _complete_using "-m";;
-         "diff")     _complete_using "--cached";;
-         "push")     _complete_using "--set-upstream origin $(_git_current_branch)";;
-         "rebase")   _complete_using "--continue";;
-         "unstage")  _complete_using "$(_git_staged_files)";;
+         add)      _complete_using "$(_git_unstaged_files)";;
+         branch)   _complete_using "$(_git_branches)";;
+         checkout) _complete_using "$(_git_branches)";;
+         commit)   _complete_using "-m";;
+         diff)     _complete_using "--cached";;
+         push)     COMPREPLY="--set-upstream origin $(_git_current_branch)";;
+         rebase)   _complete_using "--continue";;
+         unstage)  _complete_using "$(_git_staged_files)";;
       esac
    fi
 }
@@ -122,7 +122,7 @@ _mvn () {
       local phase="${COMP_WORDS[$last_index]}"
 
       case "$phase" in
-         "install")  _complete_using "-DskipTests";;
+         install)    _complete_using "-DskipTests";;
          *)          _complete_using "$supported_commands -DskipTests";;
       esac
    fi
