@@ -3,6 +3,7 @@
 # PS1
 red_b='\033[1;31m'
 green_b='\033[1;32m'
+yellow_b='\033[1;33m'
 lightblue='\033[94m'
 lightgreen='\033[92m'
 default='\033[0m'
@@ -42,7 +43,14 @@ ps1_saymyname () {
    echo '\['${lightblue}'\]'"ben"'\['${default}'\]'
 }
 
+ps1_override () {
+   [ -n "${PS1_OVERRIDE:-}" ] && echo '\['${yellow_b}'\]'${PS1_OVERRIDE:-}'\['${default}'\]'
+}
+
 ps1_prefix () {
+   local override="$(ps1_override)"
+   [ -n "$override" ] && echo $override && return
+
    # print branch if exists
    local prefixes=$(join , $(ps1_virtualenv) $(ps1_branch))
    [ -n "$prefixes" ] && echo $prefixes || ps1_saymyname
