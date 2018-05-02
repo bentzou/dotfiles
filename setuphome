@@ -120,3 +120,19 @@ theresnoplacelikehome () {
 
    source "$HOME/.bash_profile"
 }
+
+theresnoplacelikedocker () {
+   (( $# != 1 )) && echo "missing param: container" >&2 && return 1
+
+   local container=$1
+
+   docker cp "$SOURCE_DIR" $container:/tmp/
+   docker exec "$container" bash -c 'echo export PS1_OVERRIDE='$container' >> $HOME/.bashrc'
+   docker exec "$container" bash -c 'echo source /tmp/dotfiles/bashrc >> $HOME/.bashrc'
+}
+
+_running_docker () {
+   COMPREPLY=($(docker ps --format '{{.Names}}'))
+}
+
+complete -F _running_docker theresnoplacelikedocker
