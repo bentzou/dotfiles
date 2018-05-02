@@ -19,6 +19,27 @@ _ssh () {
 }
 
 
+# DOCKER
+_docker_running_containers () {
+   docker ps --format '{{.Names}}'
+}
+
+_docker () {
+   local supported_commands="cp exec images inspect ps pull start stop"
+   if (( COMP_CWORD == 1 )); then
+      _complete_using "$supported_commands"
+      return
+   fi
+
+   if (( COMP_CWORD == 2 )); then
+      local docker_command="${COMP_WORDS[1]}"
+      case "$docker_command" in
+         stop)      _complete_using "$(_docker_running_containers)";;
+      esac
+   fi
+}
+
+
 # GIT
 # support methods
 _git_branches () {
@@ -109,6 +130,7 @@ _mvn () {
 
 
 # ENABLE COMPLETIONS
+complete -F _docker docker
 complete -F _java java
 complete -F _make make
 complete -F _mvn mvn
