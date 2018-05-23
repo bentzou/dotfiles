@@ -5,8 +5,8 @@ set -o nounset
 
 # IMPORTS
    SOURCE_DIR="$(b=${BASH_SOURCE[0]}; dirname $(readlink $b || echo $b))"
-   source "$SOURCE_DIR"/completions
    source "$SOURCE_DIR"/functions
+   source "$SOURCE_DIR"/completions
    source "$SOURCE_DIR"/ps1
    source "$SOURCE_DIR"/setuphome
    source "$SOURCE_DIR"/modules/uptown/uptown
@@ -15,7 +15,7 @@ set -o nounset
 
 
 # PATHS
-   export PATH=$PATH:$HOME/bin
+   export PATH=$PATH:$HOME/bin:$HOME/Library/Python/2.7/bin
 
 
 # MISC SHELL OPTIONS
@@ -76,6 +76,7 @@ set -o nounset
    alias gb="git branch --sort=-committerdate"
    alias gc="git checkout"
    alias gd="git diff"
+   alias gdc="git diff --cached"
    alias gl="git log -20 --graph --decorate --pretty=oneline --abbrev-commit"
    alias gs="git status"
    alias gsl="git stash list"
