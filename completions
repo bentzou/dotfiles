@@ -7,15 +7,10 @@ _complete_using () {
    COMPREPLY=($(compgen -W "$1" -- ${cur}))
 }
 
-
-# SSH
-# completion entrypoint
-_ssh_hosts() {
-   awk '/^Host/ {print $2}' $HOME/.ssh/config
-}
-
-_ssh () {
-   _complete_using "$(_ssh_hosts)"
+ 
+# BASH
+function _type() {
+   _complete_using "$(declare -F | sed -e "s/^declare -f //")"
 }
 
 
@@ -41,7 +36,6 @@ _docker () {
 
 
 # GIT
-# support methods
 _git_branches () {
    echo -e "$(git branch | tr '*' ' ' | awk '{print $1}')"
 }
@@ -58,7 +52,6 @@ _git_unstaged_files () {
    echo -e "$(git status --porcelain | awk '$1 ~ /\?\?|M/ {print $2}')"
 }
 
-# completion entrypoint
 _git () {
    git branch &>/dev/null || return
 
@@ -129,11 +122,30 @@ _mvn () {
 }
 
 
+# SSH
+_ssh_hosts() {
+   awk '/^Host/ {print $2}' $HOME/.ssh/config
+}
+
+_ssh () {
+   _complete_using "$(_ssh_hosts)"
+}
+
+
+# YARN
+function _yarn () {
+   [ -f pom.xml ] || return
+   _complete_using "$(jq '.scripts' package.json | jq -r 'keys[]';)"
+}
+
+
 # ENABLE COMPLETIONS
 complete -F _docker docker
 complete -F _java java
 complete -F _make make
 complete -F _mvn mvn
 complete -F _ssh ssh
+complete -F _type type
+complete -F _yarn yarn
 complete -o default -F _git git
 complete -o plusdirs -f -X '!*.py' python
