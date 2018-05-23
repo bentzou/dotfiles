@@ -28,6 +28,7 @@ set -o nounset
    # bash history: ignore duplicate commands, erase previous duplicates
    export HISTCONTROL=ignoredups:erasedups
    export HISTIGNORE='ll:ll *:ls'
+   export PROMPT_COMMAND="history -a; ${PROMPT_COMMAND:-}"
 
    # set up the color scheme for ls
    export LSCOLORS=gxfxcxdxbxegedabagacad
