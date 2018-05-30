@@ -132,7 +132,7 @@ theresnoplacelikedocker () {
 }
 
 _running_docker () {
-   COMPREPLY=($(docker ps --format '{{.Names}}'))
+   _complete_using "$(docker ps --format '{{.Names}}')"
 }
 
 complete -F _running_docker theresnoplacelikedocker
