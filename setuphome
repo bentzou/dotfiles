@@ -129,6 +129,7 @@ theresnoplacelikedocker () {
    docker cp "$SOURCE_DIR" $container:/tmp/
    docker exec "$container" bash -c 'echo export PS1_OVERRIDE='$container' >> $HOME/.bashrc'
    docker exec "$container" bash -c 'echo source /tmp/dotfiles/bashrc >> $HOME/.bashrc'
+   docker exec "$container" bash -c 'source /tmp/dotfiles/bashrc; theresnoplacelikehome'
 }
 
 _running_docker () {
