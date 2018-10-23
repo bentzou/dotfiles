@@ -118,7 +118,8 @@ set_prompt_command set_term_to_repo
 
 # FUNCTIONS
    # fast find and grep
-   f () { flash_find "$@" | slw; }
+   f () { flash_find_file "$@" | slw; }
+   d () { flash_find_directory "$@" | slw; }
    g () { flash_grep "$@"; }
    fv () { f "$@"; vl; }
 
