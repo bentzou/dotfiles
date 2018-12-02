@@ -1,0 +1,31 @@
+#!/bin/bash
+
+_complete_using () {
+   local cur="${COMP_WORDS[COMP_CWORD]}"
+   COMPREPLY=($(compgen -W "$1" -- ${cur}))
+}
+
+function _pg () {
+	local hosts="$(cut -f1 -d: $HOME/.pgpass)"
+	_complete_using "${hosts}"
+}
+
+function pg () {
+   (( $# != 1 )) && return 1
+
+   local grep_host pgpass_str pgpass_arr host port data user
+
+   grep_host=$1
+   pgpass_str=$(grep -rih $1 "$HOME/.pgpass")
+
+   pgpass_arr=(${pgpass_str//:/ })
+
+   host=${pgpass_arr[0]}
+   port=${pgpass_arr[1]}
+   data=${pgpass_arr[2]}
+   user=${pgpass_arr[3]}
+
+   psql -h $host -p $port -U $user $data
+}
+
+complete -F _pg pg
