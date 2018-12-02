@@ -55,7 +55,7 @@ _git_unstaged_files () {
 _git () {
    git branch &>/dev/null || return
 
-   local supported_commands="add blame branch checkout commit diff pull push rebase status unstage"
+   local supported_commands="add blame branch checkout cherry-pick commit diff pull push rebase status unstage"
    if (( COMP_CWORD == 1 )); then
       _complete_using "$supported_commands"
       return
@@ -124,7 +124,7 @@ _mvn () {
 
 # SSH
 _ssh_hosts() {
-   awk '/^Host/ {print $2}' $HOME/.ssh/config
+   awk '/^Host/ && ! /\*/ {print $2}' $HOME/.ssh/config
 }
 
 _ssh () {
@@ -149,3 +149,4 @@ complete -F _type type
 complete -F _yarn yarn
 complete -o default -F _git git
 complete -o plusdirs -f -X '!*.py' python
+complete -d cd
