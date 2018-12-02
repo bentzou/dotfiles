@@ -2,6 +2,14 @@
 
 set -o nounset
 
+function abspath () { 
+   # purpose: prints the full path of the argument filename
+
+   (( $# == 1 )) || return 1
+
+   echo "$(builtin cd "$(dirname "$1")"; builtin pwd)/$(basename "$1")";
+}
+
 function backup () {
    # purpose: adds suffix to file or directory
    # usage: backup <file|directory> [suffix=.bkp]
@@ -20,6 +28,25 @@ function backup () {
    done
 
    mv -iv "$in_path" "$out_path"
+}
+
+function swap () {
+   # purpose: swap two files
+   # usage: swap <file1> <file2>
+
+   (( $# == 2 )) || return 1
+
+   local path1="$(abspath "$1")"
+   local path2="$(abspath "$2")"
+
+   [ ! -f "$1" ] && echo "error: $1 is not a file" && return 1
+   [ ! -f "$2" ] && echo "error: $2 is not a file" && return 1
+
+   local temppath="/tmp/$(date | md5)"
+
+   mv "$path1" "$temppath"
+   mv "$path2" "$path1"
+   mv "$temppath" "$path2"
 }
 
 function set_prompt_command () {
@@ -58,6 +85,17 @@ function join () {
    local IFS="$1"
    shift
    echo "$*"
+}
+
+function split () {
+   # purpose: splits a list of strings delimited by a character
+   # usage: split <strings...> [delimiter]
+
+   if tty -s; then
+      echo "$1" | awk -F "${2:-,}" '{ for (i = 1; i <= NF; i++) { print $i; } }'
+   else
+      awk -F "${1:-,}" '{ for (i = 1; i <= NF; i++) { print $i; } }'
+   fi
 }
 
 function path () {
