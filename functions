@@ -1,7 +1,5 @@
 #!/bin/bash
 
-set -o nounset
-
 function abspath () { 
    # purpose: prints the full path of the argument filename
 

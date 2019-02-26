@@ -1,6 +1,5 @@
 #!/bin/bash
 
-set -o nounset
 
 
 # IMPORTS
