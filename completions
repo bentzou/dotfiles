@@ -134,8 +134,8 @@ _ssh () {
 
 # YARN
 function _yarn () {
-   [ -f pom.xml ] || return
-   _complete_using "$(jq '.scripts' package.json | jq -r 'keys[]';)"
+   [ -f package.json ] || return
+   _complete_using "$(jq -r '.scripts|keys[]' package.json | paste -s -d' ' -)"
 }
 
 
