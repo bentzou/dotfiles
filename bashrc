@@ -8,6 +8,7 @@
    source "$SOURCE_DIR"/completions
    source "$SOURCE_DIR"/ps1
    source "$SOURCE_DIR"/setuphome
+   source "$SOURCE_DIR"/postcd
    source "$SOURCE_DIR"/modules/uptown/uptown
    source "$SOURCE_DIR"/modules/flash/flash
    source "$SOURCE_DIR"/modules/backtothefolder/bttf
@@ -140,7 +141,12 @@ set_prompt_command set_term_to_repo
    lr () { CLICOLOR_FORCE=1 ls -alhtr "$@" | slw; }
    ll () { CLICOLOR_FORCE=1 ls -alh "$@" | slw; }
 
-   cd () { builtin cd "$@" 2>/dev/null; (( $? != 0 )) && builtin cd "$(dirname $@)"; ll; }
+   cd () {
+      builtin cd "$@" 2>/dev/null;
+      (( $? != 0 )) && builtin cd "$(dirname $@)";
+      ll;
+      _post_cd;
+   }
 
    cl () { cd "$(glw)"; }
    vl () { local w; w="$(glw)"; [ -f "$w" ] && press_any_to_continue "vi $w" && { echo; vi "$w"; history -s "vi $w"; }; }
