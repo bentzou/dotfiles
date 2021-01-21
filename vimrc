@@ -86,6 +86,7 @@ vmap <C-v> <Plug>(expand_region_shrink)
 " Searching
 set hlsearch                     " highlight searches (use :noh to disable highlight)
 set ignorecase                   " ignore case when searching
+set infercase                    " autocomplete commands
 set incsearch                    " search as characters are entered
 set smartcase                    " use case when searching /Search but not /search
 
