@@ -138,8 +138,8 @@ set_prompt_command set_term_to_repo
    viewpsv () { sed 's/|/ |/g' | column -s'|' -t "$@" | less -c -#20 -N -S; }
 
    # navigation shortcuts
-   lr () { CLICOLOR_FORCE=1 ls -alhtr "$@" | slw; }
-   ll () { CLICOLOR_FORCE=1 ls -alh "$@" | slw; }
+   function lr () { CLICOLOR_FORCE=1 ls -alhtr "$@" | slw; }
+   function ll () { CLICOLOR_FORCE=1 ls -alh "$@" | slw; }
 
    cd () {
       builtin cd "$@" 2>/dev/null;
