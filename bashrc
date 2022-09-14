@@ -52,7 +52,7 @@
 
    function _code_dirs() {
       local cur="${COMP_WORDS[COMP_CWORD]}"
-      local repos="$(find "$HOME/Code" -type d -maxdepth 1 -not -path '*/\.*' | xargs basename)"
+      local repos="$(find "$HOME/Code" -type d -maxdepth 1 -mindepth 1 -not -path '*/\.*' | xargs basename)"
       COMPREPLY=($(compgen -W "$repos" -- ${cur}))
    }
    
