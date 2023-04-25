@@ -110,6 +110,9 @@ init_hushlogin () {
 }
 
 theresnoplacelikehome () {
+   git submodule update --init
+   chsh -s /bin/bash
+
    init_bash
    init_hushlogin
    init_readline
