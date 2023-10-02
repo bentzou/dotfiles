@@ -93,6 +93,14 @@ init_vim () {
       else
          echo "existing pathogen install"
       fi
+
+      # download plugins
+      if [ ! -d "$HOME/.vim/bundle/kotlin-vim" ]; then
+         git clone https://github.com/udalov/kotlin-vim ~/.vim/bundle/kotlin-vim
+         [ $? -eq 0 ] && echo "kotlin-vim installed" || echo "error installing kotlin-vim"
+      else
+         echo "existing plugin: kotlin-vim"
+      fi
       
       # set up vimrc
       link_config "$SOURCE_DIR/vimrc" "$HOME/.vimrc"
