@@ -120,6 +120,7 @@ init_hushlogin () {
 theresnoplacelikehome () {
    git submodule update --init
    chsh -s /bin/bash
+   echo "export BASH_SILENCE_DEPRECATION_WARNING=1" >> ~/.bash_profile
 
    init_bash
    init_hushlogin
