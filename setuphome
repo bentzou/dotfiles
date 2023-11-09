@@ -101,6 +101,13 @@ init_vim () {
       else
          echo "existing plugin: kotlin-vim"
       fi
+
+      if [ ! -d "$HOME/.vim/bundle/fugitive" ]; then
+         git clone https://tpope.io/vim/fugitive ~/.vim/bundle/fugitive
+         [ $? -eq 0 ] && echo "fugitive installed" || echo "error installing fugitive"
+      else
+         echo "existing plugin: fugitive"
+      fi
       
       # set up vimrc
       link_config "$SOURCE_DIR/vimrc" "$HOME/.vimrc"
