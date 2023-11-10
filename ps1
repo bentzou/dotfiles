@@ -20,7 +20,11 @@ ps1_branch () {
    (( ${#br} > $max_len )) && br="${br:0:$max_len-2}.."
 
    # get color depending on branch
-   [ "$br" = "main" ] && color="$red_b" || color="$green_b"
+   if [ "$br" = "main" ] || [ "$br" = "master" ]; then
+      color="$red_b"
+   else
+      color="$green_b"
+   fi
 
    # print colorized branch
    echo '\['${color}'\]'${br}'\['${default}'\]'
