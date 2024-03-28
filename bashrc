@@ -17,6 +17,9 @@
 # PATHS
    export PATH=$PATH:$HOME/bin:$HOME/Library/Python/2.7/bin
 
+# JAVA
+   export GRADLE_OPTS="-Dorg.gradle.daemon=true -Dorg.gradle.configureondemand=true -Dorg.gradle.configuration-cache=true -Dorg.gradle.caching=true"
+
 
 # MISC SHELL OPTIONS
    # allow forward searching in history using C-s (vs C-r for backward)
