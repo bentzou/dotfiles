@@ -66,6 +66,11 @@ init_readline () {
    link_config "$SOURCE_DIR/inputrc" "$HOME/.inputrc" | indent
 }
 
+init_ssh () {
+   echo "Setting up ssh"
+   link_config "$SOURCE_DIR/sshconfig" "$HOME/.ssh/config" | indent
+}
+
 init_tmux () {
    echo "Setting up tmux"
    link_config "$SOURCE_DIR/tmuxconf" "$HOME/.tmux.conf" | indent
