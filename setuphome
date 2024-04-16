@@ -33,9 +33,15 @@ init_bash () {
       if [[ $cur_shell != *"bash" ]]; then
          echo "setting default shell to bash"
          chsh -s /bin/bash
-         echo "export BASH_SILENCE_DEPRECATION_WARNING=1" >> ~/.bash_profile
       else
          echo "default shell is already bash"
+      fi
+
+      if ! grep "export BASH_SILENCE_DEPRECATION_WARNING=1" "$HOME/.bash_profile" >/dev/null; then
+         echo "bash deprecation warning silenced"
+         echo "export BASH_SILENCE_DEPRECATION_WARNING=1" >> ~/.bash_profile
+      else
+         echo "bash deprecation warning already silenced"
       fi
    } | indent
 
