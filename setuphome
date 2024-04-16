@@ -26,6 +26,19 @@ link_config () {
 }
 
 init_bash () {
+   echo "Setting default shell to bash"
+
+   {
+      local cur_shell="$(ps -p $$ | tail -1 | awk '{print $NF}')"
+      if [[ $cur_shell != *"bash" ]]; then
+         echo "setting default shell to bash"
+         chsh -s /bin/bash
+         echo "export BASH_SILENCE_DEPRECATION_WARNING=1" >> ~/.bash_profile
+      else
+         echo "default shell is already bash"
+      fi
+   } | indent
+
    echo "Setting up bashrc"
 
    {
@@ -131,8 +144,6 @@ init_hushlogin () {
 
 theresnoplacelikehome () {
    git submodule update --init
-   chsh -s /bin/bash
-   echo "export BASH_SILENCE_DEPRECATION_WARNING=1" >> ~/.bash_profile
 
    init_bash
    init_hushlogin
