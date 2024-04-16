@@ -1,0 +1,21 @@
+# Enable compression for improved performance
+Compression yes
+
+# Set up SSH multiplexing and persistent connections
+ControlMaster auto
+ControlPath ~/.ssh/control:%h:%p:%r
+ControlPersist 20m
+
+# Enable SSH agent forwarding
+ForwardAgent yes
+
+# Use keychain for managing SSH keys
+UseKeychain yes
+AddKeysToAgent yes
+
+# Promptsfor confirmation if host key has changed or is unknown
+StrictHostKeyChecking ask
+
+# Prevent SSH connection from timing out due to inactivity
+ServerAliveInterval 60
+ServerAliveCountMax 30
