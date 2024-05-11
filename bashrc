@@ -110,6 +110,31 @@ set_term_to_repo () {
 
 set_prompt_command set_term_to_repo
 
+activate () {
+   local path="$(find . -name activate)"
+   if [ -f "$path" ]; then
+      echo -n $path
+      press_any_to_continue && source $path;
+   fi
+
+   local env_path="./envars.sh"
+   if [ -f "$env_path" ]; then
+      echo -n $env_path
+      press_any_to_continue && source $env_path;
+   fi
+
+   if ! psql -l &>/dev/null; then
+      echo -n "brew services run postgresql@16"
+      # press_any_to_continue && LC_ALL="C" /opt/homebrew/opt/postgresql@16/bin/postgres -D /opt/homebrew/var/postgresql@16
+      press_any_to_continue && brew services run postgresql@16 
+   fi
+
+   if ! redis-cli ping &>/dev/null; then
+      echo -n "brew services run redis"
+      press_any_to_continue && brew services run redis
+   fi
+}
+
 
 # LAST FILE
    # saves the last word from the last line of a list
