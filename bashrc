@@ -117,10 +117,10 @@ activate () {
       press_any_to_continue && source $path;
    fi
 
-   local env_path="./envars.sh"
+   local env_path=".env"
    if [ -f "$env_path" ]; then
       echo -n $env_path
-      press_any_to_continue && source $env_path;
+      press_any_to_continue && set -a && source $env_path && set +a
    fi
 
    if ! psql -l &>/dev/null; then
