@@ -166,6 +166,26 @@ function ca_date () {
    TZ=America/Los_Angeles date
 }
 
+function github_date () {
+   # purpose: gets github-formatted date, optionally adjusted by days and hours
+   # usage: get_date [day_delta] [hour_delta]
+   # example: get_date +5 -1
+
+   date_format="%a %b %d %H:%M:%S %Y %z"
+
+   if (( $# < 1 )) || (( $# == 1 && $1 == 0 )) || [[ $# == 2 && $1 == 0 && $2 == 0 ]]; then
+      date +"$date_format" && return
+   fi
+
+   local day_sign
+   (( $1 < 0 )) || day_sign="+"
+   (( $# == 1 )) && date -v"${day_sign}$1"d +"$date_format" && return
+
+   local hour_sign
+   (( $2 < 0 )) || hour_sign="+"
+   date -v"${day_sign}$1"d -v"${hour_sign}$2"H +"$date_format"
+}
+
 function lines () {
    # purpose: prints lines for line numbers start to end
    # usage: ... | lines <start> [end=EOF]
