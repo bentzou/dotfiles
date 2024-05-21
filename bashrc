@@ -111,27 +111,29 @@ set_term_to_repo () {
 set_prompt_command set_term_to_repo
 
 activate () {
-   local path="$(find . -name activate)"
-   if [ -f "$path" ]; then
-      echo -n $path
-      press_any_to_continue && source $path;
+   local activate_path="$(find . -name activate)"
+   if [ -f "$activate_path" ]; then
+      cmd="source $activate_path"
+      press_any_to_continue "$cmd " && $cmd
+   elif [ -f "pyproject.toml" ]; then
+      cmd="source $(poetry env info --path)/bin/activate"
+      press_any_to_continue "$cmd " && $cmd
    fi
 
    local env_path=".env"
    if [ -f "$env_path" ]; then
-      echo -n $env_path
-      press_any_to_continue && set -a && source $env_path && set +a
+      cmd="source $env_path"
+      press_any_to_continue "$cmd " && set -a && $cmd && set +a
    fi
 
    if ! psql -l &>/dev/null; then
-      echo -n "brew services run postgresql@16"
-      # press_any_to_continue && LC_ALL="C" /opt/homebrew/opt/postgresql@16/bin/postgres -D /opt/homebrew/var/postgresql@16
-      press_any_to_continue && brew services run postgresql@16 
+      cmd="brew services run postgresql@16"
+      press_any_to_continue "$cmd " && $cmd
    fi
 
    if ! redis-cli ping &>/dev/null; then
-      echo -n "brew services run redis"
-      press_any_to_continue && brew services run redis
+      cmd="brew services run redis"
+      press_any_to_continue "$cmd " && $cmd
    fi
 }
 
