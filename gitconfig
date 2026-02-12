@@ -14,3 +14,7 @@
 
 [status]
    showUntrackedFiles = all
+
+[user]
+   name = Ben Tzou
+   email = bentzou@gmail.com
