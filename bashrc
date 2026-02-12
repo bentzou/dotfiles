@@ -23,7 +23,7 @@
 
 # MISC SHELL OPTIONS
    # allow forward searching in history using C-s (vs C-r for backward)
-   stty -ixon
+   [[ $- == *i* ]] && stty -ixon
 
    # enable color in the terminal bash shell
    export CLICOLOR=1
