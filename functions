@@ -178,13 +178,15 @@ function github_date () {
       date +"$date_format" && return
    fi
 
+   local day_delta=$(( $1 ))
    local day_sign
-   (( $1 < 0 )) || day_sign="+"
-   (( $# == 1 )) && date -v"${day_sign}$1"d +"$date_format" && return
+   (( day_delta < 0 )) || day_sign="+"
+   (( $# == 1 )) && date -v"${day_sign}${day_delta}"d +"$date_format" && return
 
+   local hour_delta=$(( $2 ))
    local hour_sign
-   (( $2 < 0 )) || hour_sign="+"
-   date -v"${day_sign}$1"d -v"${hour_sign}$2"H +"$date_format"
+   (( hour_delta < 0 )) || hour_sign="+"
+   date -v"${day_sign}${day_delta}"d -v"${hour_sign}${hour_delta}"H +"$date_format"
 }
 
 function lines () {
