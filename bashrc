@@ -63,17 +63,6 @@
 
    function c () { cd ~/Code/${1:-}; }
 
-   # ide
-   alias ecl='open -a eclipse'
-
-   # maven
-   export MAVEN_OPTS="-XX:+TieredCompilation -XX:TieredStopAtLevel=1"
-   alias mcc="mvn clean compile"
-   alias mci="mvn clean install"
-   #alias mci="mvn clean install -Dlog4j.configuration=file:/Users/bentzou/Code/log4j.xml"
-   alias mi="mvn install -DskipTests"
-   alias mt="mvn surefire:test failsafe:integration-test"
-
    # git
    alias ga="git add"
    alias gb="git branch --sort=-committerdate"
