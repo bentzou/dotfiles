@@ -172,7 +172,7 @@ function github_date () {
    # usage: get_date [day_delta] [hour_delta]
    # example: get_date +5 -1
 
-   date_format="%a %b %d %H:%M:%S %Y %z"
+   local date_format="%a %b %d %H:%M:%S %Y %z"
 
    if (( $# < 1 )) || (( $# == 1 && $1 == 0 )) || [[ $# == 2 && $1 == 0 && $2 == 0 ]]; then
       date +"$date_format" && return
