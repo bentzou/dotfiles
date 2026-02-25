@@ -113,7 +113,7 @@ function append () {
    # usage: ... | append [suffix]
    # example: echo hello | append " world"      # hello world
 
-   awk '$0=$0"'"$*"'"'
+   awk -v suffix="$*" '{print $0 suffix}'
 }
 
 function prepend () {
@@ -121,7 +121,7 @@ function prepend () {
    # usage: ... | prepend [prefix]
    # example: echo world | prepend "hello "     # hello world
 
-   awk '$0="'"$*"'"$0'
+   awk -v prefix="$*" '{print prefix $0}'
 }
 
 function rmcolor () {
