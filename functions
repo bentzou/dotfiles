@@ -49,8 +49,7 @@ function swap () {
 }
 
 function set_prompt_command () {
-   (( $# == 1 )) || return 1
-   [[ "${PROMPT_COMMAND:-}" == *"$1"* ]] && return
+   (( $# != 1 )) || [[ "${PROMPT_COMMAND:-}" == *"$1"* ]] && return 1
    PROMPT_COMMAND="${PROMPT_COMMAND:-:}; $1"
 }
 
@@ -139,7 +138,7 @@ function endcolor () {
    # usage:  ... | endcolor
    # example: create_color_output | endcolor
 
-   append '\33[0m'
+   append $'\x1b[0m'
 }
 
 function strip () {
