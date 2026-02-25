@@ -49,7 +49,9 @@ function swap () {
 }
 
 function set_prompt_command () {
-   (( $# == 1 )) && PROMPT_COMMAND="${PROMPT_COMMAND:-:}; $1"
+   (( $# == 1 )) || return 1
+   [[ "${PROMPT_COMMAND:-}" == *"$1"* ]] && return
+   PROMPT_COMMAND="${PROMPT_COMMAND:-:}; $1"
 }
 
 function set_terminal_title () {
