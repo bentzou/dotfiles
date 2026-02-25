@@ -62,7 +62,7 @@ function set_terminal_title () {
 
 function indent () {
    # purpose: indents every input line with spaces.
-   # usage: ... | indent [num_tabs=1] [num_spaces_per_tab=3]
+   # usage: ... | indent [num_tabs=1] [num_spaces_per_tab=3]  (negative num_tabs to un-indent)
    # example: echo hello world | indent
 
    (( 0 <= $# && $# <= 2 )) || return 1
