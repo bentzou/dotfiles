@@ -1,0 +1,87 @@
+{
+  "env": {
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1",
+    "CLAUDE_ENV_FILE": "/Users/bentzou/.env"
+  },
+  "attribution": {
+    "commit": "",
+    "pr": ""
+  },
+  "permissions": {
+    "allow": [
+      "Bash(git:*)",
+      "Bash(gh:*)",
+      "Bash(python:*)",
+      "Bash(python3:*)",
+      "Bash(pytest:*)",
+      "Bash(ruff:*)",
+      "Bash(pyenv local:*)",
+      "Bash(pip install:*)",
+      "Bash(pip show:*)",
+      "Bash(uv pip install:*)",
+      "Bash(uv pip show:*)",
+      "Bash(source .venv/bin/activate:*)",
+      "Bash(railway:*)",
+      "Bash(ls:*)",
+      "Bash(curl:*)",
+      "Bash(cat:*)",
+      "Bash(grep:*)",
+      "Bash(find:*)",
+      "Bash(wc:*)",
+      "Bash(test:*)",
+      "Bash(cp:*)",
+      "Bash(export:*)",
+      "Bash(chmod +x:*)",
+      "Bash(sqlite3:*)",
+      "WebSearch",
+      "WebFetch"
+    ],
+    "deny": [
+      "Read(./.env)",
+      "Bash(rm -rf *)",
+      "Bash(railway delete:*)",
+      "Bash(railway down:*)"
+    ],
+    "defaultMode": "acceptEdits"
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "FILE=$(cat | jq -r '.tool_input.file_path // empty') && [ -n \"$FILE\" ] && [[ \"$FILE\" == *.py ]] && cd \"$CLAUDE_PROJECT_DIR\" && [ -f .venv/bin/ruff ] && .venv/bin/ruff format --quiet \"$FILE\" 2>/dev/null; exit 0"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "afplay /System/Library/Sounds/Glass.aiff"
+          }
+        ]
+      }
+    ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "npx -y ccstatusline@latest",
+    "padding": 0
+  },
+  "enabledPlugins": {
+    "pyright-lsp@claude-plugins-official": true,
+    "playwright@claude-plugins-official": false,
+    "superpowers@claude-plugins-official": false,
+    "context7@claude-plugins-official": false,
+    "frontend-design@claude-plugins-official": true,
+    "typescript-lsp@claude-plugins-official": true,
+    "code-simplifier@claude-plugins-official": true,
+    "ralph-loop@claude-plugins-official": true,
+    "github@claude-plugins-official": true,
+    "feature-dev@claude-plugins-official": true
+  }
+}

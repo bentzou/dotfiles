@@ -138,6 +138,17 @@ init_vim () {
    } | indent
 }
 
+init_claude () {
+   echo "Setting up claude"
+   {
+      mkdir -p "$HOME/.claude/agents"
+      link_config "$SOURCE_DIR/claude/settings.json" "$HOME/.claude/settings.json"
+      link_config "$SOURCE_DIR/claude/CLAUDE.md" "$HOME/.claude/CLAUDE.md"
+      link_config "$SOURCE_DIR/claude/agents/code-reviewer.md" "$HOME/.claude/agents/code-reviewer.md"
+      link_config "$SOURCE_DIR/claude/agents/system-architect.md" "$HOME/.claude/agents/system-architect.md"
+   } | indent
+}
+
 init_hushlogin () {
    echo "Setting up hushlogin"
 
@@ -157,6 +168,7 @@ theresnoplacelikehome () {
    init_git
    init_tmux
    init_vim
+   init_claude
 
    source "$HOME/.bash_profile"
 }
