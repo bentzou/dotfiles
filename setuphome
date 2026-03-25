@@ -149,6 +149,22 @@ init_claude () {
    } | indent
 }
 
+init_macos_defaults () {
+   echo "Setting up macOS defaults"
+   {
+      defaults write com.google.Chrome NSUserKeyEquivalents '{
+          "Close Tab" = "^w";
+          "Close Window" = "^$w";
+          "New Incognito Window" = "^$n";
+          "New Tab" = "^t";
+          "New Window" = "^n";
+          "Open Location..." = "^l";
+          "Reopen Closed Tab" = "^$t";
+      }'
+      echo "keyboard shortcuts set for Chrome"
+   } | indent
+}
+
 init_hushlogin () {
    echo "Setting up hushlogin"
 
@@ -169,6 +185,7 @@ theresnoplacelikehome () {
    init_tmux
    init_vim
    init_claude
+   init_macos_defaults
 
    source "$HOME/.bash_profile"
 }
