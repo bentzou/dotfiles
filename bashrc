@@ -36,8 +36,6 @@
    # set up the color scheme for ls
    export LSCOLORS=gxfxcxdxbxegedabagacad
 
-   # enable color for iTerm
-   export TERM=screen-256color
 
 
 # ALIASES
