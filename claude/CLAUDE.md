@@ -3,7 +3,7 @@
 ## Dev Workflow
 
 - When making changes that can be verified in a browser, always surface the relevant local server URL (e.g. http://localhost:8000, http://localhost:5173) so the user can easily check the result.
-- Repeatedly check whether the `main` branch (or the repo's default branch) has new commits upstream that aren't in the current working branch. Do NOT automatically pull or merge those updates. Instead, notify the user that new commits exist on `main` and offer to pull them in. A good cadence is at session start and before starting any significant new piece of work.
+- Repeatedly check whether the current branch's **base branch** has new commits upstream that aren't yet in the current working branch. The base branch is whatever branch the current branch was created from — it may be `main`, `master`, `dev`, a release branch, another feature branch, or anything else. Do not assume a specific name; detect it dynamically (e.g. via `git rev-parse --abbrev-ref <branch>@{upstream}`, `git symbolic-ref refs/remotes/origin/HEAD`, the merge-base against likely candidates, or by asking the user if it's ambiguous). Do NOT automatically pull or merge those updates. Instead, notify the user that new commits exist on the base branch and offer to pull them in. A good cadence is at session start and before starting any significant new piece of work.
 
 ## Pull Request Descriptions
 
