@@ -138,6 +138,14 @@ init_vim () {
    } | indent
 }
 
+init_ghostty () {
+   echo "Setting up ghostty"
+   {
+      mkdir -p "$HOME/.config/ghostty"
+      link_config "$SOURCE_DIR/ghosttyconfig" "$HOME/.config/ghostty/config"
+   } | indent
+}
+
 init_claude () {
    echo "Setting up claude"
    {
@@ -146,14 +154,6 @@ init_claude () {
       link_config "$SOURCE_DIR/claude/CLAUDE.md" "$HOME/.claude/CLAUDE.md"
       link_config "$SOURCE_DIR/claude/agents/code-reviewer.md" "$HOME/.claude/agents/code-reviewer.md"
       link_config "$SOURCE_DIR/claude/agents/system-architect.md" "$HOME/.claude/agents/system-architect.md"
-   } | indent
-}
-
-init_ghostty () {
-   echo "Setting up ghostty"
-   {
-      mkdir -p "$HOME/Library/Application Support/com.mitchellh.ghostty"
-      link_config "$SOURCE_DIR/ghostty" "$HOME/Library/Application Support/com.mitchellh.ghostty/config.ghostty"
    } | indent
 }
 
