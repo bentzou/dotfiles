@@ -1,5 +1,4 @@
 {
-  "disableAutomaticFeedback": true,
   "env": {
     "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1",
     "CLAUDE_ENV_FILE": "/Users/bentzou/.env"
@@ -62,7 +61,7 @@
       "Bash(railway delete:*)",
       "Bash(railway down:*)"
     ],
-    "defaultMode": "acceptEdits"
+    "defaultMode": "auto"
   },
   "hooks": {
     "PostToolUse": [
@@ -100,11 +99,13 @@
     "frontend-design@claude-plugins-official": true,
     "typescript-lsp@claude-plugins-official": true,
     "code-simplifier@claude-plugins-official": true,
-    "ralph-loop@claude-plugins-official": true,
+    "ralph-loop@claude-plugins-official": false,
     "feature-dev@claude-plugins-official": true,
-    "slack@claude-plugins-official": true,
     "notion@claude-plugins-official": true,
+    "slack@claude-plugins-official": true,
+    "figma@claude-plugins-official": false,
     "github@claude-plugins-official": true
   },
-  "voiceEnabled": true
+  "voiceEnabled": true,
+  "disableAutomaticFeedback": true
 }
