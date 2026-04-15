@@ -149,6 +149,14 @@ init_claude () {
    } | indent
 }
 
+init_ghostty () {
+   echo "Setting up ghostty"
+   {
+      mkdir -p "$HOME/Library/Application Support/com.mitchellh.ghostty"
+      link_config "$SOURCE_DIR/ghostty" "$HOME/Library/Application Support/com.mitchellh.ghostty/config.ghostty"
+   } | indent
+}
+
 init_macos_defaults () {
    echo "Setting up macOS defaults"
    {
@@ -185,6 +193,7 @@ theresnoplacelikehome () {
    init_tmux
    init_vim
    init_claude
+   init_ghostty
    init_macos_defaults
 
    source "$HOME/.bash_profile"
