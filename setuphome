@@ -142,7 +142,7 @@ init_ghostty () {
    echo "Setting up ghostty"
    {
       mkdir -p "$HOME/.config/ghostty"
-      link_config "$SOURCE_DIR/ghostty" "$HOME/.config/ghostty/config"
+      link_config "$SOURCE_DIR/apps/ghostty" "$HOME/.config/ghostty/config"
    } | indent
 }
 

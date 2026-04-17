@@ -57,10 +57,14 @@ This symlinks config files, sets bash as the default shell, sources the bashrc, 
 - **[backtothefolder](https://github.com/bentzou/backtothefolder)** - Navigate forward/backward through cd history with Shift+Alt+Arrow keys
 - **[flash](https://github.com/bentzou/flash)** - Fast find and grep with context-aware exclusions (node_modules, .git, venv, etc.)
 
+### Apps
+
+- **apps/ghostty** - Ghostty terminal config (macOS)
+- **apps/tilix.dconf** - Tilix terminal emulator settings (Linux)
+
 ### Other
 
 - **pg** - Quick PostgreSQL connection helper using `~/.pgpass`
-- **tilix.dconf** - Tilix terminal emulator settings
 
 ## Aliases
 
