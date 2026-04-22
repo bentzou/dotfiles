@@ -16,6 +16,12 @@
 - When making changes that can be verified in a browser, always surface the relevant local server URL (e.g. http://localhost:8000, http://localhost:5173) so the user can easily check the result.
 - Repeatedly check whether the current branch's **base branch** has new commits upstream that aren't yet in the current working branch. The base branch is whatever branch the current branch was created from — it may be `main`, `master`, `dev`, a release branch, another feature branch, or anything else. Do not assume a specific name; detect it dynamically (e.g. via `git rev-parse --abbrev-ref <branch>@{upstream}`, `git symbolic-ref refs/remotes/origin/HEAD`, the merge-base against likely candidates, or by asking the user if it's ambiguous). Do NOT automatically pull or merge those updates. Instead, notify the user that new commits exist on the base branch and offer to pull them in. A good cadence is at session start and before starting any significant new piece of work.
 
+## Code Design
+
+- **Test at multiple levels.** For anything you build, write tests at more than one scope — e.g. unit tests for individual functions/modules plus larger-scope tests (integration, end-to-end, or feature-level) that exercise how the pieces fit together. A single level of coverage is not sufficient.
+- **Reflect on whether the change is a hack.** Before finalizing any change, explicitly ask: is this a hack? A hack is a local patch that makes the symptom go away without addressing what the problem actually reveals about the system. When you notice one, stop and think broadly about what ideal architecture the problem is pointing toward, then either implement that or surface the tradeoff to the user. Do not silently ship hacks.
+- **Treat extensibility and testability as first-class concerns.** When designing or modifying code, explicitly evaluate how easy it will be to (a) extend with new cases or requirements, and (b) test in isolation. If the design makes either hard, flag it and consider alternatives — don't defer these concerns to "later."
+
 ## Testing
 
 - Default to test-driven development: write failing tests first, then implement to make them pass. If a task isn't a good fit for TDD (e.g. pure config changes, exploratory spikes, UI tweaks without a test harness), call that out explicitly rather than silently skipping tests.
