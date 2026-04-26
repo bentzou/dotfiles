@@ -20,10 +20,15 @@
 
 - Default to test-driven development: write failing tests first, then implement to make them pass. If a task isn't a good fit for TDD (e.g. pure config changes, exploratory spikes, UI tweaks without a test harness), call that out explicitly rather than silently skipping tests.
 
+## Git Workflow
+
+- Work on **feature branches**, not directly on the base branch. If we're sitting on `main`/`master`/`dev` when non-trivial work begins, cut a branch first.
+- Aim for **reasonably chunked commits**: each commit should represent a coherent unit of change with a message that explains the *why*. Don't lump unrelated changes together; don't atomize trivially either. If a session has produced a sprawling pile of edits, propose a sensible commit breakdown rather than dumping it all into one commit.
+- **Do not push until asked.** Local commits are fine and encouraged; pushing to a remote is a user-initiated action.
+- When opening a PR, **start it as a draft** unless the user says otherwise. The user will mark it ready when they're satisfied.
+- **Force push requires explicit confirmation from the user, every time.** Even on a feature branch the user owns, even after a rebase, even if it seems obviously safe — ask first. Never force-push to a shared/base branch.
+
 ## Pull Request Descriptions
 
-- Always begin a PR description with a plain-English section that captures, at a high level:
-  1. **The problem** — a clear statement of the user or business problem being solved (not just a restatement of the code change).
-  2. **The solution** — the approach taken to solve that problem, in conceptual terms.
-  3. **The implementation** — a brief walkthrough of how the solution is realized in code (key files, functions, or design decisions).
-- This opening section should be readable by someone without deep context on the codebase. Save technical details, checklists, and test plans for sections that come afterward.
+- Follow the **conventions of the current project** first (look for `.github/PULL_REQUEST_TEMPLATE.md`, recent merged PRs, or repo docs). In the absence of a project convention, fall back to sensible defaults (summary, test plan, screenshots if UI, links to related issues).
+- On top of whatever convention applies, **always begin the description with a plain-English summary** at the very top — readable by someone without deep context on the codebase. It should make the *problem*, the *approach*, and (briefly) *how it's implemented* legible without reading the diff. Technical details, checklists, and test plans come after.
