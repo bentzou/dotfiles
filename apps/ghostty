@@ -60,3 +60,6 @@ copy-on-select = true
 window-inherit-working-directory = true
 tab-inherit-working-directory = true
 split-inherit-working-directory = true
+
+keybind = alt+up=csi:1;9A
+keybind = alt+down=csi:1;9B
