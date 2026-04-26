@@ -56,7 +56,6 @@ cursor-style = bar
 cursor-style-blink = true
 window-padding-x = 6
 window-padding-y = 4
-copy-on-select = true
 window-inherit-working-directory = true
 tab-inherit-working-directory = true
 split-inherit-working-directory = true
