@@ -106,6 +106,7 @@
     "figma@claude-plugins-official": false,
     "github@claude-plugins-official": true
   },
+  "skipAutoPermissionPrompt": true,
   "voiceEnabled": true,
   "disableAutomaticFeedback": true
 }
