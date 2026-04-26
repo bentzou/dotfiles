@@ -63,3 +63,5 @@ split-inherit-working-directory = true
 
 keybind = alt+up=csi:1;9A
 keybind = alt+down=csi:1;9B
+keybind = alt+shift+left=csi:1;10D
+keybind = alt+shift+right=csi:1;10C
