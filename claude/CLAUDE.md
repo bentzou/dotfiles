@@ -38,3 +38,15 @@
 
 - Follow the **conventions of the current project** first (look for `.github/PULL_REQUEST_TEMPLATE.md`, recent merged PRs, or repo docs). In the absence of a project convention, fall back to sensible defaults (summary, test plan, screenshots if UI, links to related issues).
 - On top of whatever convention applies, **always begin the description with a plain-English summary** at the very top — readable by someone without deep context on the codebase. It should make the *problem*, the *approach*, and (briefly) *how it's implemented* legible without reading the diff. Technical details, checklists, and test plans come after.
+
+## Session Naming
+
+- When Claude Code generates or updates a session topic name, always prefix it with the base name of the current working directory followed by an em dash, then a short description of the work being done.
+- Format: `{dir-basename} — {short work description}`.
+- Examples:
+  - `p3 — tenancy spec iteration`
+  - `p3 — agent runtime refactor`
+  - `ploy-site — blog redesign`
+  - `.claude — hook debugging`
+- Keep the description concise (3–6 words). Update it as the session's focus shifts so the name always reflects the current work, not just the initial prompt.
+- The base name is the last path segment of `pwd` (e.g. `/Users/bentzou/Code/ploy/p3` → `p3`).
