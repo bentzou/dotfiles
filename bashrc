@@ -9,9 +9,12 @@
    source "$SOURCE_DIR"/ps1
    source "$SOURCE_DIR"/setuphome
    source "$SOURCE_DIR"/postcd
-   source "$SOURCE_DIR"/modules/uptown/uptown
    source "$SOURCE_DIR"/modules/flash/flash
-   source "$SOURCE_DIR"/modules/backtothefolder/bttf
+   # uptown and bttf call `bind` on init, which warns in non-interactive shells
+   if [[ $- == *i* ]]; then
+      source "$SOURCE_DIR"/modules/uptown/uptown
+      source "$SOURCE_DIR"/modules/backtothefolder/bttf
+   fi
 
 
 # PATHS
