@@ -146,6 +146,14 @@ init_ghostty () {
    } | indent
 }
 
+init_ccstatusline () {
+   echo "Setting up ccstatusline"
+   {
+      mkdir -p "$HOME/.config/ccstatusline"
+      link_config "$SOURCE_DIR/apps/ccstatusline/settings.json" "$HOME/.config/ccstatusline/settings.json"
+   } | indent
+}
+
 init_claude () {
    echo "Setting up claude"
    {
@@ -194,6 +202,7 @@ theresnoplacelikehome () {
    init_vim
    init_claude
    init_ghostty
+   init_ccstatusline
    init_macos_defaults
 
    source "$HOME/.bash_profile"
