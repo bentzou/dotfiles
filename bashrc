@@ -74,6 +74,11 @@
    alias gs="git status"
    alias gsl="git stash list"
 
+   # just
+   alias js='builtin cd ~/Code/ploy && just sync'
+   jg () { local p; p=$(builtin cd ~/Code/ploy && just go) || return; builtin cd "$p"; }
+   jc () { local p; p=$(builtin cd ~/Code/ploy && just go) || return; builtin cd "$p"; claude; }
+
    # vagrant
    alias vd="vagrant destroy"
    alias vu="vagrant up"
