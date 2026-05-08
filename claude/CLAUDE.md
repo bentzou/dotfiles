@@ -32,7 +32,7 @@
 - Aim for **reasonably chunked commits**: each commit should represent a coherent unit of change with a message that explains the *why*. Don't lump unrelated changes together; don't atomize trivially either. If a session has produced a sprawling pile of edits, propose a sensible commit breakdown rather than dumping it all into one commit.
 - **Do not push until asked.** Local commits are fine and encouraged; pushing to a remote is a user-initiated action.
 - When opening a PR, **start it as a draft** unless the user says otherwise. The user will mark it ready when they're satisfied.
-- **Force push requires explicit confirmation from the user, every time.** Even on a feature branch the user owns, even after a rebase, even if it seems obviously safe — ask first. Never force-push to a shared/base branch.
+- **Force push requires explicit confirmation from the user, every time.** Even on a feature branch the user owns, even after a rebase, even if it seems obviously safe — ask first. Never force-push to a shared/base branch. Implicit signals like "rebase on dev", "fix the CI failure", or any prior approval to push normally do NOT extend to a subsequent force-push. Pause after the local change is ready and ask "ready to force-push to `<branch>`?" — wait for an explicit affirmative ("yes", "push", "go") before running. Applies to both `--force` and `--force-with-lease`.
 
 ## Pull Request Descriptions
 
