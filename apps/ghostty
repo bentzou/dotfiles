@@ -61,7 +61,9 @@ window-inherit-working-directory = true
 tab-inherit-working-directory = true
 split-inherit-working-directory = true
 
-keybind = alt+up=csi:1;9A
-keybind = alt+down=csi:1;9B
+# uptown listens for xterm modifier-3 (alt) on non-iTerm terminals.
+# bttf hardcodes iTerm modifier-10 (alt+shift) regardless of terminal.
+keybind = alt+up=csi:1;3A
+keybind = alt+down=csi:1;3B
 keybind = alt+shift+left=csi:1;10D
 keybind = alt+shift+right=csi:1;10C
