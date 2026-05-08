@@ -21,15 +21,6 @@
         "type": "separator"
       },
       {
-        "id": "11",
-        "type": "git-origin-repo",
-        "color": "brightBlue"
-      },
-      {
-        "id": "16",
-        "type": "separator"
-      },
-      {
         "id": "17",
         "type": "current-working-dir",
         "color": "blue",
