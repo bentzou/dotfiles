@@ -3,6 +3,15 @@
   "lines": [
     [
       {
+        "id": "3",
+        "type": "context-length",
+        "color": "white"
+      },
+      {
+        "id": "4",
+        "type": "separator"
+      },
+      {
         "id": "5",
         "type": "git-branch",
         "color": "brightMagenta"
@@ -46,15 +55,6 @@
         "id": "1",
         "type": "model",
         "color": "cyan"
-      },
-      {
-        "id": "4",
-        "type": "separator"
-      },
-      {
-        "id": "3",
-        "type": "context-length",
-        "color": "white"
       },
       {
         "id": "14",
