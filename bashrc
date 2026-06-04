@@ -81,7 +81,15 @@ fi
    # just
    alias js='builtin cd ~/Code/ploy && just sync'
    jg () { local p; p=$(builtin cd ~/Code/ploy && just go) || return; builtin cd "$p"; }
-   jc () { ( builtin cd ~/Code/ploy && just claude ); }
+   # Claim a ready clone (owned by this shell's $$, so closing the terminal frees
+   # it), cd into its app dir so you stay there after Claude exits, then release.
+   jc () {
+      local p
+      p=$(builtin cd ~/Code/ploy && just claim $$) || return
+      builtin cd "$p/src/ploy-app"
+      claude
+      ( builtin cd ~/Code/ploy && just release "$p" $$ )
+   }
 
    # vagrant
    alias vd="vagrant destroy"
