@@ -107,6 +107,8 @@
   },
   "effortLevel": "medium",
   "skipAutoPermissionPrompt": true,
+  "tui": "fullscreen",
   "voiceEnabled": true,
-  "disableAutomaticFeedback": true
+  "disableAutomaticFeedback": true,
+  "model": "claude-fable-5[1m]"
 }
