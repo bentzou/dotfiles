@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# Ghostty shell integration for Bash. This should be at the top of your bashrc!
+if [ -n "${GHOSTTY_RESOURCES_DIR}" ]; then
+    builtin source "${GHOSTTY_RESOURCES_DIR}/shell-integration/bash/ghostty.bash"
+fi
 
 
 # IMPORTS
@@ -166,12 +170,12 @@ activate () {
    function lr () { CLICOLOR_FORCE=1 ls -alhtr "$@" | slw; }
    function ll () { CLICOLOR_FORCE=1 ls -alh "$@" | slw; }
 
-   cd () {
-      builtin cd "$@" 2>/dev/null;
-      (( $? != 0 )) && builtin cd "$(dirname $@)";
-      ll;
-      _post_cd;
-   }
+#   cd () {
+#      builtin cd "$@" 2>/dev/null;
+#      (( $? != 0 )) && builtin cd "$(dirname $@)";
+#      ll;
+#      _post_cd;
+#   }
 
    cl () { cd "$(glw)"; }
    vl () { local w; w="$(glw)"; [ -f "$w" ] && press_any_to_continue "vi $w" && { echo; vi "$w"; history -s "vi $w"; }; }
