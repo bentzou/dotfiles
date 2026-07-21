@@ -81,14 +81,36 @@ fi
    # just
    alias js='builtin cd ~/Code/ploy && just sync'
    jg () { local p; p=$(builtin cd ~/Code/ploy && just go) || return; builtin cd "$p"; }
+
+   # Run the ploy justfile from anywhere, without changing the shell's cwd.
+   j () { just --justfile ~/Code/ploy/justfile -d ~/Code/ploy "$@"; }
+
+   # Report cwd to the terminal (OSC 7). Terminals like Ghostty/iTerm/WezTerm use
+   # this so new tabs/splits open in the same directory. It normally fires at every
+   # prompt, but jc cd's and launches claude without ever returning to a prompt —
+   # so we emit it by hand.
+   set_term_cwd () { printf '\e]7;file://%s%s\e\\' "${HOSTNAME:-localhost}" "$PWD"; }
+
    # Claim a ready clone (owned by this shell's $$, so closing the terminal frees
-   # it), cd into its app dir so you stay there after Claude exits, then release.
+   # it), cd into its app dir so you stay there after claude exits, then release.
+   # Args go to the CLI: bare words are joined into one prompt (`jc hello world`
+   # == `jc "hello world"`); if any arg starts with `-`, all pass through as-is.
    jc () {
-      local p
-      p=$(builtin cd ~/Code/ploy && just claim $$) || return
-      builtin cd "$p/src/ploy-app"
-      claude
-      ( builtin cd ~/Code/ploy && just release "$p" $$ )
+      local clone
+      case " $* " in *" -"*) ;; *) [ $# -gt 1 ] && set -- "$*";; esac
+      clone=$(j claim $$) || return
+      builtin cd "$clone/src/ploy-app" && set_term_cwd
+      claude "$@"
+      j release "$clone" $$
+   }
+
+   jx () {
+      local clone
+      case " $* " in *" -"*) ;; *) [ $# -gt 1 ] && set -- "$*";; esac
+      clone=$(j claim $$ codex) || return
+      builtin cd "$clone/src/ploy-app" && set_term_cwd
+      codex "$@"
+      j release "$clone" $$
    }
 
    # vagrant
