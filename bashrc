@@ -80,7 +80,7 @@ fi
 
    # just
    alias js='builtin cd ~/Code/ploy && just sync'
-   jg () { local p; p=$(builtin cd ~/Code/ploy && just go) || return; builtin cd "$p"; }
+   jg () { local p; p=$(builtin cd ~/Code/ploy && just next) || return; builtin cd "$p"; }
 
    # Run the ploy justfile from anywhere, without changing the shell's cwd.
    j () { just --justfile ~/Code/ploy/justfile -d ~/Code/ploy "$@"; }
@@ -93,22 +93,28 @@ fi
 
    # Claim a ready clone (owned by this shell's $$, so closing the terminal frees
    # it), cd into its app dir so you stay there after claude exits, then release.
+   # The app dir comes from CLONE_SUBDIR in ploy's spork config (clone root if
+   # unset), so the monorepo knob lives in one place.
    # Args go to the CLI: bare words are joined into one prompt (`jc hello world`
    # == `jc "hello world"`); if any arg starts with `-`, all pass through as-is.
+   spork_subdir () { ( . ~/Code/ploy/.spork.local/config 2>/dev/null; printf '%s' "${CLONE_SUBDIR:-}" ); }
+
    jc () {
-      local clone
+      local clone sub
       case " $* " in *" -"*) ;; *) [ $# -gt 1 ] && set -- "$*";; esac
       clone=$(j claim $$) || return
-      builtin cd "$clone/src/ploy-app" && set_term_cwd
+      sub=$(spork_subdir)
+      builtin cd "$clone${sub:+/$sub}" && set_term_cwd
       claude "$@"
       j release "$clone" $$
    }
 
    jx () {
-      local clone
+      local clone sub
       case " $* " in *" -"*) ;; *) [ $# -gt 1 ] && set -- "$*";; esac
       clone=$(j claim $$ codex) || return
-      builtin cd "$clone/src/ploy-app" && set_term_cwd
+      sub=$(spork_subdir)
+      builtin cd "$clone${sub:+/$sub}" && set_term_cwd
       codex "$@"
       j release "$clone" $$
    }
