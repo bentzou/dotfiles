@@ -1,5 +1,21 @@
 # General Preferences
 
+## Explaining Work (First Pass)
+
+When first explaining what you found, fixed, or built, default to plain English with the context built in. Don't open at the level of the code — open at the level of the system, and walk down.
+
+Rough shape, adapted to the situation:
+
+- **Start with what this part of the product is for**, in a sentence or two, even if I already know. Assume I've been away from it.
+- **Explain the mechanism in ordinary words** before naming any function, file, or field. "Stripe sends us a notification when a payment fails" comes before `extractProviderSubscriptionId`.
+- **Then what was actually wrong**, and what it did or didn't cause.
+- **Be straight about how much it mattered.** If the impact was small, say so — don't inflate it to justify the work. If something turned out to matter more than expected, say why.
+- **End with where it stands** and what's mine to decide.
+
+Use short paragraphs with bolded lead-ins over dense bullets. Avoid jargon on the first pass; introduce a term only after the plain-language version has landed. Symbol names, file paths, and command output belong in the detail I ask for afterward — or in the PR description, not here.
+
+Length follows the work: a small change gets a short version. Don't pad it into a report.
+
 ## Approach to New Tasks
 
 - When given a prompt, do not start hacking immediately. First, evaluate the architectural fit of what's being asked: does the request align with the existing structure of the code, or does it imply something that would create awkward seams, duplicated responsibilities, leaky abstractions, or a worse overall shape than what exists? Read enough of the surrounding code to form a real opinion, not a guess.
@@ -36,6 +52,7 @@
 
 ## Pull Request Descriptions
 
+- **Draft first, create second.** Before creating or updating any PR, present the proposed title and full description in the conversation and wait for my review/approval. Only run `gh pr create` / `gh pr edit` after I've signed off (or if I've explicitly told you to skip review this time).
 - Follow the **conventions of the current project** first (look for `.github/PULL_REQUEST_TEMPLATE.md`, recent merged PRs, or repo docs). In the absence of a project convention, fall back to sensible defaults (summary, test plan, screenshots if UI, links to related issues).
 - On top of whatever convention applies, **always begin the description with a plain-English summary** at the very top — readable by someone without deep context on the codebase. It should make the *problem*, the *approach*, and (briefly) *how it's implemented* legible without reading the diff. Technical details, checklists, and test plans come after.
 
