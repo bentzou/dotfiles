@@ -1,0 +1,6 @@
+# Starter preferences. The live config is stored in ignored local/config.toml.
+model = "gpt-6-astra"
+model_reasoning_effort = "medium"
+
+[tui]
+status_line = ["project-name", "git-branch", "model", "context-used"]

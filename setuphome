@@ -182,6 +182,13 @@ init_claude () {
    } | indent
 }
 
+init_codex () {
+   echo "Setting up codex"
+   {
+      mkdir -p "$HOME/.codex"
+      link_private_config "$SOURCE_DIR/agents/codex/config.toml" "$SOURCE_DIR/agents/codex/local/config.toml" "$HOME/.codex/config.toml"
+   } | indent
+}
 
 init_macos_defaults () {
    echo "Setting up macOS defaults"
@@ -219,6 +226,7 @@ theresnoplacelikehome () {
    init_tmux
    init_vim
    init_claude
+   init_codex
    init_ghostty
    init_ccstatusline
    init_macos_defaults

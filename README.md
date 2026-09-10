@@ -60,6 +60,7 @@ This symlinks config files, sets bash as the default shell, sources the bashrc, 
 ### Agents
 
 - **agents/claude/** - Claude Code starter settings, instructions, and agent definitions
+- **agents/codex/** - Codex starter settings
 
 ### Apps
 
@@ -99,12 +100,13 @@ theresnoplacelikedocker <container_name>
 
 ## AI tool configuration
 
-Agent configuration lives under `agents/`. Tracked files contain starter preferences;
+Both tools live under `agents/`. Tracked files contain starter preferences;
 full live settings are kept in ignored `local/` directories:
 
 | Tool | Tracked starter | Ignored live config | Symlink |
 |------|-----------------|---------------------|---------|
 | Claude | `agents/claude/settings.json` | `agents/claude/local/settings.json` | `~/.claude/settings.json` |
+| Codex | `agents/codex/config.toml` | `agents/codex/local/config.toml` | `~/.codex/config.toml` |
 
 Setup preserves an existing live config on the first run, or copies the starter
 on a fresh machine. Later runs preserve the ignored local file. This keeps
@@ -115,6 +117,7 @@ The local directories use mode 700 and new local config files use mode 600.
 ```bash
 source setuphome
 init_claude
+init_codex
 ```
 
 Claude instructions and agent definitions remain directly symlinked to tracked
