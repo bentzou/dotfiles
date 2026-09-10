@@ -154,16 +154,34 @@ init_ccstatusline () {
    } | indent
 }
 
+# Keep application-written/account-specific settings out of tracked files.
+# Arguments: tracked starter, ignored local config, application config path.
+link_private_config () {
+   local starter="$1" private_config="$2" live_config="$3"
+   mkdir -p "$(dirname "$private_config")" || return
+   chmod 700 "$(dirname "$private_config")" || return
+   if [[ ! -e "$private_config" ]]; then
+      if [[ -e "$live_config" ]]; then
+         cp -pL "$live_config" "$private_config" || return
+      else
+         cp "$starter" "$private_config" || return
+      fi
+      chmod 600 "$private_config" || return
+   fi
+   link_config "$private_config" "$live_config"
+}
+
 init_claude () {
    echo "Setting up claude"
    {
       mkdir -p "$HOME/.claude/agents"
-      link_config "$SOURCE_DIR/claude/settings.json" "$HOME/.claude/settings.json"
-      link_config "$SOURCE_DIR/claude/CLAUDE.md" "$HOME/.claude/CLAUDE.md"
-      link_config "$SOURCE_DIR/claude/agents/code-reviewer.md" "$HOME/.claude/agents/code-reviewer.md"
-      link_config "$SOURCE_DIR/claude/agents/system-architect.md" "$HOME/.claude/agents/system-architect.md"
+      link_private_config "$SOURCE_DIR/agents/claude/settings.json" "$SOURCE_DIR/agents/claude/local/settings.json" "$HOME/.claude/settings.json"
+      link_config "$SOURCE_DIR/agents/claude/CLAUDE.md" "$HOME/.claude/CLAUDE.md"
+      link_config "$SOURCE_DIR/agents/claude/agents/code-reviewer.md" "$HOME/.claude/agents/code-reviewer.md"
+      link_config "$SOURCE_DIR/agents/claude/agents/system-architect.md" "$HOME/.claude/agents/system-architect.md"
    } | indent
 }
+
 
 init_macos_defaults () {
    echo "Setting up macOS defaults"

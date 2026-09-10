@@ -1,0 +1,2 @@
+# Private application settings; tracked files are safe starter configs.
+/agents/*/local/
