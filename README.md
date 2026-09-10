@@ -100,19 +100,33 @@ theresnoplacelikedocker <container_name>
 
 ## AI tool configuration
 
-Both tools live under `agents/`. Tracked files contain starter preferences;
-full live settings are kept in ignored `local/` directories:
+Both tools live under `agents/`. Claude uses a tracked starter and an ignored
+live config. Codex uses two native configuration tiers:
 
-| Tool | Tracked starter | Ignored live config | Symlink |
-|------|-----------------|---------------------|---------|
-| Claude | `agents/claude/settings.json` | `agents/claude/local/settings.json` | `~/.claude/settings.json` |
-| Codex | `agents/codex/config.toml` | `agents/codex/local/config.toml` | `~/.codex/config.toml` |
+| Tool / tier | Repository file | Installed path |
+|-------------|-----------------|----------------|
+| Claude starter | `agents/claude/settings.json` | Copied only when no live config exists |
+| Claude local | `agents/claude/local/settings.json` (ignored) | `~/.claude/settings.json` |
+| Codex shared | `agents/codex/config.toml` (tracked) | `/etc/codex/config.toml` |
+| Codex local | `agents/codex/local/config.toml` (ignored) | `~/.codex/config.toml` |
 
-Setup preserves an existing live config on the first run, or copies the starter
-on a fresh machine. Later runs preserve the ignored local file. This keeps
-account settings, generated organization context, local runtime paths, and
-project trust decisions out of Git, including settings written by either app.
-The local directories use mode 700 and new local config files use mode 600.
+Codex loads shared defaults first, then applies local overrides. Shared settings
+contain portable preferences; private paths, project trust, account settings,
+and machine-managed integrations stay local. Both installed Codex paths are
+symlinks, so pulling shared changes updates the defaults for new sessions.
+
+`init_codex` requires administrator access to install the system symlink on a
+new laptop. An existing system config is preserved and setup stops rather than
+overwriting it. This system tier applies to all users on the machine and points
+into this checkout, which must remain available and readable.
+
+Setup preserves existing user settings; on a fresh laptop it creates an empty
+local override file. Existing preferences in the local file still override the
+shared defaults. The local directories use mode 700 and config files mode 600.
+
+To share a setting changed through Codex, manually move its key from the local
+config to `agents/codex/config.toml`, then review and commit the diff. Remove the
+local copy so future shared updates take effect. There is no automatic sync.
 
 ```bash
 source setuphome

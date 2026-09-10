@@ -182,12 +182,39 @@ init_claude () {
    } | indent
 }
 
+# Shared defaults are the system layer; application writes stay in the user layer.
 init_codex () {
    echo "Setting up codex"
-   {
-      mkdir -p "$HOME/.codex"
-      link_private_config "$SOURCE_DIR/agents/codex/config.toml" "$SOURCE_DIR/agents/codex/local/config.toml" "$HOME/.codex/config.toml"
-   } | indent
+   local shared_config="$SOURCE_DIR/agents/codex/config.toml"
+   local private_config="$SOURCE_DIR/agents/codex/local/config.toml"
+   local live_config="$HOME/.codex/config.toml"
+   local system_config="/etc/codex/config.toml"
+
+   if [[ -L "$system_config" && "$(readlink "$system_config")" == "$shared_config" ]]; then
+      echo "existing shared Codex config: $system_config -> $shared_config"
+   elif [[ -e "$system_config" || -L "$system_config" ]]; then
+      echo "Existing $system_config preserved; move it aside before installing shared Codex defaults." >&2
+      return 1
+   else
+      if [[ "$EUID" -eq 0 ]]; then
+         mkdir -p /etc/codex && ln -s "$shared_config" "$system_config" || return
+      else
+         echo "sudo to modify $system_config"
+         sudo mkdir -p /etc/codex && sudo ln -s "$shared_config" "$system_config" || return
+      fi
+   fi
+
+   mkdir -p "$HOME/.codex" "$(dirname "$private_config")" || return
+   chmod 700 "$(dirname "$private_config")" || return
+   if [[ ! -e "$private_config" ]]; then
+      if [[ -e "$live_config" ]]; then
+         cp -pL "$live_config" "$private_config" || return
+      else
+         (umask 077; printf '%s\n' '# Private and laptop-specific overrides. Shared defaults: /etc/codex/config.toml' > "$private_config") || return
+      fi
+   fi
+   chmod 600 "$private_config" || return
+   link_config "$private_config" "$live_config"
 }
 
 init_macos_defaults () {

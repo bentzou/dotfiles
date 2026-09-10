@@ -1,6 +1,19 @@
-# Starter preferences. The live config is stored in ignored local/config.toml.
+# Portable defaults loaded through /etc/codex/config.toml.
+# Keep private and machine-specific overrides in local/config.toml.
 model = "gpt-6-astra"
 model_reasoning_effort = "medium"
 
 [tui]
-status_line = ["project-name", "git-branch", "model", "context-used"]
+status_line = ["project-name", "git-branch", "model", "context-used", "current-dir"]
+status_line_use_colors = true
+
+[desktop]
+ambient-suggestions-enabled = false
+conversationDetailMode = "STEPS_COMMANDS"
+appearanceTheme = "dark"
+followUpQueueMode = "queue"
+dock-icon-preference = "codex-system"
+
+[features]
+js_repl = false
+memories = true
