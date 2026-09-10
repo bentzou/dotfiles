@@ -177,8 +177,8 @@ init_claude () {
       mkdir -p "$HOME/.claude/agents"
       link_private_config "$SOURCE_DIR/agents/claude/settings.json" "$SOURCE_DIR/agents/claude/local/settings.json" "$HOME/.claude/settings.json"
       link_config "$SOURCE_DIR/agents/claude/CLAUDE.md" "$HOME/.claude/CLAUDE.md"
-      link_config "$SOURCE_DIR/agents/claude/agents/code-reviewer.md" "$HOME/.claude/agents/code-reviewer.md"
-      link_config "$SOURCE_DIR/agents/claude/agents/system-architect.md" "$HOME/.claude/agents/system-architect.md"
+      link_private_config "$SOURCE_DIR/agents/claude/agents/code-reviewer.md" "$SOURCE_DIR/agents/claude/local/agents/code-reviewer.md" "$HOME/.claude/agents/code-reviewer.md"
+      link_private_config "$SOURCE_DIR/agents/claude/agents/system-architect.md" "$SOURCE_DIR/agents/claude/local/agents/system-architect.md" "$HOME/.claude/agents/system-architect.md"
    } | indent
 }
 

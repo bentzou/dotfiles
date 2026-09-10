@@ -120,8 +120,11 @@ init_claude
 init_codex
 ```
 
-Claude instructions and agent definitions remain directly symlinked to tracked
-files. Credentials, sessions, and plugin caches stay in each tool's home folder.
+Claude's global `CLAUDE.md` instructions remain directly symlinked to the tracked
+file. Agent definitions use the same starter/local pattern: tracked templates
+are in `agents/claude/agents/`, while live definitions are symlinked to ignored
+`agents/claude/local/agents/` files. This preserves project-specific agent context
+locally. Credentials, sessions, and plugin caches stay in each tool's home folder.
 
 To change live settings, edit the application's config or its ignored local
 file. To share a preference across machines, copy only that preference into the
