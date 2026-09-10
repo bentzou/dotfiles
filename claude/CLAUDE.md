@@ -1,5 +1,23 @@
 # General Preferences
 
+## Language: Simplified Technical English (ASD-STE100)
+
+Write all replies in ASD-STE100 Simplified Technical English. This rule applies to every project and every reply.
+
+Sentence rules:
+
+- Use the active voice. Write "The worker injects the script", not "The script is injected by the worker".
+- Keep sentences short. Use 20 words or fewer for instructions. Use 25 words or fewer for descriptions.
+- Give one idea in each sentence. Do not join two ideas with a dash or a semicolon.
+- Use the present tense when you can.
+- Use simple, common words. Use one word for one meaning, and keep the same word for the same thing.
+- Do not use idioms, metaphors, slang, or humour.
+- Keep noun clusters to three words or fewer.
+- Keep paragraphs to six sentences or fewer.
+- Use articles ("the", "a") and full relative pronouns ("that", "which"). Do not remove them.
+
+This rule controls sentence construction. The structure rules in "Explaining Work (First Pass)" stay in force. Use short paragraphs, bold lead-ins, and a system-level opening. Write each sentence in STE.
+
 ## Explaining Work (First Pass)
 
 When first explaining what you found, fixed, or built, default to plain English with the context built in. Don't open at the level of the code — open at the level of the system, and walk down.

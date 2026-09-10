@@ -10,8 +10,6 @@
     "allow": [
       "Bash(git:*)",
       "Bash(gh:*)",
-      "Bash(python:*)",
-      "Bash(python3:*)",
       "Bash(pytest:*)",
       "Bash(ruff:*)",
       "Bash(pyenv local:*)",
@@ -30,7 +28,6 @@
       "Bash(test:*)",
       "Bash(cp:*)",
       "Bash(export:*)",
-      "Bash(chmod +x:*)",
       "Bash(sqlite3:*)",
       "Bash(pbcopy)",
       "Bash(pbcopy:*)",
@@ -62,6 +59,7 @@
     ],
     "defaultMode": "auto"
   },
+  "model": "fable[1m]",
   "hooks": {
     "PostToolUse": [
       {
@@ -109,14 +107,14 @@
     "cloudflare@claude-plugins-official": true
   },
   "effortLevel": "medium",
+  "tui": "fullscreen",
   "voice": {
     "enabled": true,
     "mode": "hold"
   },
   "theme": "dark",
+  "agentPushNotifEnabled": true,
   "skipAutoPermissionPrompt": true,
-  "tui": "fullscreen",
   "voiceEnabled": true,
-  "disableAutomaticFeedback": true,
-  "model": "claude-fable-5[1m]"
+  "disableAutomaticFeedback": true
 }
